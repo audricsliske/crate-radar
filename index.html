@@ -64,22 +64,36 @@
     .top-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
     .sync-btn {
       background: rgba(163, 255, 18, 0.14);
       border: 1px solid rgba(163, 255, 18, 0.45);
       color: var(--lime);
       border-radius: 9px;
-      padding: 6px 11px;
-      font-size: 0.78rem;
+      padding: 6px 10px;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
     }
     .sync-btn:hover { background: rgba(163, 255, 18, 0.22); }
+    .import-btn {
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      color: var(--cyan);
+      border-radius: 9px;
+      padding: 6px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .import-btn:hover { background: rgba(0, 229, 255, 0.2); }
     .status {
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       color: var(--muted);
       text-align: right;
     }
@@ -168,7 +182,12 @@
       gap: 8px;
       flex-wrap: wrap;
     }
-    .re-download-link {
+    .synced-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .re-download-link, .reset-sync-link {
       background: none;
       border: none;
       color: var(--cyan);
@@ -179,7 +198,12 @@
       text-decoration: underline;
       display: none;
     }
-    .re-download-link.visible { display: inline; }
+    .reset-sync-link {
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .reset-sync-link:hover { color: var(--amber); }
+    .re-download-link.visible, .reset-sync-link.visible { display: inline; }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -350,8 +374,10 @@
     <div class="top-row">
       <div class="brand"><span class="dot"></span> CRATE RADAR</div>
       <div class="top-right">
-        <button class="sync-btn" id="syncFolderBtn" title="Scans all subfolders locally to tag duplicates">Sync Music Folder</button>
+        <button class="sync-btn" id="syncFolderBtn" title="Scans a folder and merges its tracks">+ Sync Folder</button>
+        <button class="import-btn" id="importJsonBtn" title="Load an existing owned_tracks.json file">Import JSON</button>
         <input type="file" id="folderPicker" webkitdirectory directory multiple hidden />
+        <input type="file" id="jsonPicker" accept=".json,application/json" hidden />
         <div class="status" id="lastUpdated">Loading...</div>
       </div>
     </div>
@@ -379,47 +405,134 @@
     <div class="summary-bar">
       <span id="countLabel">0 tracks</span>
       <button class="re-download-link" id="downloadOwnedBtn">Save owned_tracks.json for GitHub</button>
-      <span id="ownedLabel">0 synced</span>
+      <span class="synced-group">
+        <span id="ownedLabel">0 synced</span>
+        <button class="reset-sync-link" id="resetSyncBtn" title="Clear browser-cached folder sync">(Reset)</button>
+      </span>
     </div>
     <div id="feed"></div>
   </main>
 
   <script>
     const DONE_KEY = "crate_radar_done_v1";
-    const OWNED_KEY = "crate_radar_owned_v1";
+    const OWNED_KEY = "crate_radar_owned_v2";
     const AUDIO_EXT_RE = /\.(mp3|wav|flac|aiff|aif|m4a|aac|ogg|alac|wma)$/i;
-    const TRACK_NUM_RE = /^\d{1,3}[\s._-]+/;
-    const DJ_NOISE_RE = /[\(\[]\s*(extended\s*mix|original\s*mix|radio\s*edit|clean|dirty|intro|outro|short\s*edit|club\s*mix|instrumental|acapella|free\s*download|free\s*dl|320\s*kbps|320|master|hq|explicit)\s*[\)\]]/gi;
+    const LEADING_META_RE = /^(?:\d{1,3}(?:\s*bpm)?|\d{1,2}[abm])[\s._-]+/i;
+
+    const STOP_WORDS = new Set([
+      "extended", "original", "mix", "radio", "clean", "dirty", "intro", "outro",
+      "short", "club", "instrumental", "acapella", "free", "download", "dl",
+      "320", "320kbps", "kbps", "master", "mastered", "hq", "explicit",
+      "feat", "ft", "featuring", "vs", "and", "the", "a", "an", "of", "in", "on",
+      "out", "now", "hypeddit", "droploud", "soundcloud", "sc", "bpm", "official",
+      "audio", "video", "premiere", "release", "version", "ver"
+    ]);
+
+    const REMIX_MODIFIERS = new Set([
+      "flip", "bootleg", "vip", "remix", "rework", "mashup", "refix"
+    ]);
 
     let allTracks = [];
-    let repoOwnedKeys = new Set();
+    let repoOwnedTitles = [];
+    let localOwnedTitles = [];
+    let combinedOwnedProfiles = [];
     let activeFilter = "ALL";
     let showDone = false;
     let hideDuplicates = false;
     let playingTrackKey = null;
     let latestOwnedPayload = null;
 
-    function normalizeKey(text) {
-      let s = (text || "").replace(/\s+/g, " ").trim();
-      s = s.replace(AUDIO_EXT_RE, "");
-      s = s.replace(TRACK_NUM_RE, "");
-      s = s.replace(DJ_NOISE_RE, "");
-      s = s.toLowerCase();
-      s = s.replace(/&/g, "and");
-      s = s.replace(/(feat|ft)\.?/g, "");
-      return s.replace(/[^a-z0-9]/g, "");
+    function foldAscii(text) {
+      return (text || "").normalize("NFD").replace(/[̀-ͯ]/g, "");
     }
 
-    function isDuplicateTrack(track, combinedOwnedSet) {
+    function tokenizeTitle(text) {
+      let s = foldAscii(text).replace(/\s+/g, " ").trim();
+      s = s.replace(AUDIO_EXT_RE, "");
+      while (true) {
+        const nxt = s.replace(LEADING_META_RE, "");
+        if (nxt === s) break;
+        s = nxt;
+      }
+      s = s.replace(/(radio|short)\s+edit/gi, " ");
+      s = s.replace(/\d{1,2}[abm]/gi, " ");
+      s = s.replace(/\d{2,3}\s*bpm/gi, " ");
+      s = s.toLowerCase().replace(/&/g, " ");
+
+      const rawTokens = s.match(/[a-z0-9]+/g) || [];
+      const core = new Set();
+      const mods = new Set();
+      const all = new Set();
+
+      for (const tok of rawTokens) {
+        if (STOP_WORDS.has(tok)) continue;
+        if (tok.length === 1 && !/^\d$/.test(tok)) continue;
+        all.add(tok);
+        if (REMIX_MODIFIERS.has(tok)) mods.add(tok);
+        else core.add(tok);
+      }
+
+      const flat = [...all].sort().join("");
+      return { core, mods, flat };
+    }
+
+    function getUniqueMergedTitles() {
+      const seen = new Set();
+      const merged = [];
+      for (const title of [...repoOwnedTitles, ...localOwnedTitles]) {
+        const info = tokenizeTitle(title);
+        if (info.core.size > 0 && !seen.has(info.flat)) {
+          seen.add(info.flat);
+          merged.push(title);
+        }
+      }
+      return merged.sort((a, b) => a.localeCompare(b));
+    }
+
+    function rebuildOwnedProfiles() {
+      const seen = new Set();
+      const profiles = [];
+      for (const title of [...repoOwnedTitles, ...localOwnedTitles]) {
+        const info = tokenizeTitle(title);
+        if (info.core.size > 0 && !seen.has(info.flat)) {
+          seen.add(info.flat);
+          profiles.push(info);
+        }
+      }
+      combinedOwnedProfiles = profiles;
+    }
+
+    function setsEqual(a, b) {
+      if (a.size !== b.size) return false;
+      for (const item of a) {
+        if (!b.has(item)) return false;
+      }
+      return true;
+    }
+
+    function isDuplicateTrack(track) {
       if (track.is_duplicate) return true;
-      const key = normalizeKey(track.title);
-      if (!key) return false;
-      if (combinedOwnedSet.has(key)) return true;
-      if (key.length >= 12) {
-        for (const oKey of combinedOwnedSet) {
-          if (oKey.length >= 12 && (key.includes(oKey) || oKey.includes(key))) {
-            return true;
+      const tInfo = tokenizeTitle(track.title);
+      if (tInfo.core.size === 0) return false;
+
+      for (const oInfo of combinedOwnedProfiles) {
+        if (tInfo.flat && tInfo.flat === oInfo.flat) return true;
+        if (!setsEqual(tInfo.mods, oInfo.mods)) continue;
+
+        let commonCount = 0;
+        let singleCommon = "";
+        for (const tok of tInfo.core) {
+          if (oInfo.core.has(tok)) {
+            commonCount++;
+            singleCommon = tok;
           }
+        }
+        const minLen = Math.min(tInfo.core.size, oInfo.core.size);
+        if (minLen >= 2 && commonCount >= 2 && (commonCount / minLen) >= 0.80) {
+          return true;
+        }
+        if (minLen === 1 && commonCount === 1 && singleCommon.length >= 6) {
+          return true;
         }
       }
       return false;
@@ -437,20 +550,17 @@
       localStorage.setItem(DONE_KEY, JSON.stringify([...set]));
     }
 
-    function getLocalOwnedKeys() {
+    function loadLocalOwnedTitles() {
       try {
-        return new Set(JSON.parse(localStorage.getItem(OWNED_KEY) || "[]"));
+        const parsed = JSON.parse(localStorage.getItem(OWNED_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
       } catch {
-        return new Set();
+        return [];
       }
     }
 
-    function saveLocalOwnedKeys(set) {
-      localStorage.setItem(OWNED_KEY, JSON.stringify([...set]));
-    }
-
-    function getAllOwnedKeys() {
-      return new Set([...repoOwnedKeys, ...getLocalOwnedKeys()]);
+    function saveLocalOwnedTitles(arr) {
+      localStorage.setItem(OWNED_KEY, JSON.stringify(arr));
     }
 
     function toggleDone(trackKey) {
@@ -534,36 +644,76 @@
       document.getElementById("folderPicker").click();
     });
 
+    document.getElementById("importJsonBtn").addEventListener("click", () => {
+      document.getElementById("jsonPicker").click();
+    });
+
     document.getElementById("downloadOwnedBtn").addEventListener("click", () => {
       if (latestOwnedPayload) triggerOwnedDownload(latestOwnedPayload);
     });
 
+    document.getElementById("resetSyncBtn").addEventListener("click", () => {
+      localOwnedTitles = [];
+      saveLocalOwnedTitles([]);
+      rebuildOwnedProfiles();
+      render();
+    });
+
+    document.getElementById("jsonPicker").addEventListener("change", async (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        const list = Array.isArray(data) ? data : (data.tracks || []);
+        const titles = list.map(item => typeof item === "string" ? item : (item.title || "")).filter(Boolean);
+        if (!titles.length) {
+          alert("That JSON file did not contain any tracks.");
+          return;
+        }
+        localOwnedTitles = [...localOwnedTitles, ...titles];
+        const mergedAll = getUniqueMergedTitles();
+        localOwnedTitles = mergedAll;
+        saveLocalOwnedTitles(mergedAll);
+        rebuildOwnedProfiles();
+        latestOwnedPayload = {
+          updated_at: new Date().toISOString(),
+          count: mergedAll.length,
+          tracks: mergedAll
+        };
+        document.getElementById("downloadOwnedBtn").classList.add("visible");
+        render();
+      } catch (err) {
+        alert("Could not read that JSON file. Make sure you picked owned_tracks.json.");
+      }
+      e.target.value = "";
+    });
+
     document.getElementById("folderPicker").addEventListener("change", (e) => {
       const files = Array.from(e.target.files || []);
-      const cleanTitles = [];
-      const seenLocal = new Set();
+      const newlyScanned = [];
 
       for (const file of files) {
         if (!AUDIO_EXT_RE.test(file.name)) continue;
         const cleanName = file.name.replace(AUDIO_EXT_RE, "").trim();
-        const key = normalizeKey(cleanName);
-        if (key && !seenLocal.has(key)) {
-          seenLocal.add(key);
-          cleanTitles.push(cleanName);
-        }
+        if (cleanName) newlyScanned.push(cleanName);
       }
 
-      if (!cleanTitles.length) {
+      if (!newlyScanned.length) {
         alert("No audio files (.mp3, .wav, .flac, .m4a, .aiff) were found in that folder.");
         return;
       }
 
-      saveLocalOwnedKeys(seenLocal);
+      localOwnedTitles = [...localOwnedTitles, ...newlyScanned];
+      const mergedAll = getUniqueMergedTitles();
+      localOwnedTitles = mergedAll;
+      saveLocalOwnedTitles(mergedAll);
+      rebuildOwnedProfiles();
 
       latestOwnedPayload = {
         updated_at: new Date().toISOString(),
-        count: cleanTitles.length,
-        tracks: cleanTitles.sort()
+        count: mergedAll.length,
+        tracks: mergedAll
       };
 
       triggerOwnedDownload(latestOwnedPayload);
@@ -577,9 +727,8 @@
       const feed = document.getElementById("feed");
       const query = document.getElementById("searchInput").value.trim().toLowerCase();
       const doneSet = getDoneSet();
-      const ownedSet = getAllOwnedKeys();
 
-      const totalDupesInFeed = allTracks.filter(t => isDuplicateTrack(t, ownedSet)).length;
+      const totalDupesInFeed = allTracks.filter(t => isDuplicateTrack(t)).length;
 
       const dupesBtn = document.getElementById("toggleDupesBtn");
       dupesBtn.textContent = (hideDuplicates ? "Show Dupes (" : "Hide Dupes (") + totalDupesInFeed + ")";
@@ -590,10 +739,11 @@
       hiddenBtn.classList.toggle("active-cyan", showDone);
 
       document.getElementById("ownedLabel").textContent =
-        `${ownedSet.size} synced`;
+        `${combinedOwnedProfiles.length} synced`;
+      document.getElementById("resetSyncBtn").classList.toggle("visible", localOwnedTitles.length > 0);
 
       const filtered = allTracks.filter(t => {
-        const isDupe = isDuplicateTrack(t, ownedSet);
+        const isDupe = isDuplicateTrack(t);
         if (hideDuplicates && isDupe && activeFilter !== "DUPLICATES") return false;
 
         const key = t.url || t.title;
@@ -628,7 +778,7 @@
       filtered.forEach(track => {
         const key = track.url || track.title;
         const isDone = doneSet.has(key);
-        const isDupe = isDuplicateTrack(track, ownedSet);
+        const isDupe = isDuplicateTrack(track);
         const isPlaying = (playingTrackKey === key);
 
         const card = document.createElement("div");
@@ -694,6 +844,7 @@
     });
 
     async function init() {
+      localOwnedTitles = loadLocalOwnedTitles();
       try {
         const [tracksRes, ownedRes] = await Promise.all([
           fetch("./tracks.json?v=" + Date.now()),
@@ -706,15 +857,12 @@
         if (ownedRes && ownedRes.ok) {
           const ownedData = await ownedRes.json();
           const list = Array.isArray(ownedData) ? ownedData : (ownedData.tracks || []);
-          list.forEach(item => {
-            const name = typeof item === "string" ? item : (item.title || "");
-            const k = normalizeKey(name);
-            if (k) repoOwnedKeys.add(k);
-          });
+          repoOwnedTitles = list.map(item => typeof item === "string" ? item : (item.title || "")).filter(Boolean);
         }
       } catch (err) {
         document.getElementById("lastUpdated").textContent = "Waiting for first scan";
       }
+      rebuildOwnedProfiles();
       render();
     }
 

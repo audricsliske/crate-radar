@@ -2,6 +2,7 @@ import json
 import os
 import re
 import time
+import unicodedata
 from datetime import datetime, timezone, timedelta
 from urllib.parse import urljoin, urlparse, unquote
 
@@ -35,13 +36,18 @@ EDIT_KEYWORDS = re.compile(r"\b(flip|edit|bootleg|vip|remix|rework|mashup|refix)
 GENRE_KEYWORDS = re.compile(r"\b(dubstep|riddim|trap|afro\s*house|afrotech|afro-tech|bass)\b", re.I)
 
 AUDIO_EXT_RE = re.compile(r"\.(mp3|wav|flac|aiff|aif|m4a|aac|ogg|alac|wma)$", re.I)
-TRACK_NUM_RE = re.compile(r"^\d{1,3}[\s._-]+")
-DJ_NOISE_TAGS_RE = re.compile(
-    r"[\(\[]\s*(extended\s*mix|original\s*mix|radio\s*edit|clean|dirty|intro|outro|"
-    r"short\s*edit|club\s*mix|instrumental|acapella|free\s*download|free\s*dl|"
-    r"320\s*kbps|320|master|hq|explicit)\s*[\)\]]",
-    re.I,
-)
+LEADING_META_RE = re.compile(r"^(?:\d{1,3}(?:\s*bpm)?|\d{1,2}[abm])[\s._-]+", re.I)
+
+STOP_WORDS = {
+    "extended", "original", "mix", "radio", "clean", "dirty", "intro", "outro",
+    "short", "club", "instrumental", "acapella", "free", "download", "dl",
+    "320", "320kbps", "kbps", "master", "mastered", "hq", "explicit",
+    "feat", "ft", "featuring", "vs", "and", "the", "a", "an", "of", "in", "on",
+    "out", "now", "hypeddit", "droploud", "soundcloud", "sc", "bpm", "official",
+    "audio", "video", "premiere", "release", "version", "ver"
+}
+
+REMIX_MODIFIERS = {"flip", "bootleg", "vip", "remix", "rework", "mashup", "refix"}
 
 SC_RESERVED_USERS = {
     "login", "signup", "connect", "oauth", "you", "settings", "stream",
@@ -59,27 +65,66 @@ def clean_text(text: str) -> str:
     return re.sub(r"\s+", " ", (text or "")).strip()
 
 
-def normalize_key(text: str) -> str:
-    s = clean_text(text)
+def fold_ascii(text: str) -> str:
+    nfkd = unicodedata.normalize("NFKD", text or "")
+    return nfkd.encode("ascii", "ignore").decode("ascii")
+
+
+def tokenize_title(text: str) -> dict:
+    s = fold_ascii(clean_text(text))
     s = AUDIO_EXT_RE.sub("", s)
-    s = TRACK_NUM_RE.sub("", s)
-    s = DJ_NOISE_TAGS_RE.sub("", s)
-    s = s.lower()
-    s = s.replace("&", "and")
-    s = re.sub(r"\b(feat|ft)\.?\b", "", s)
-    return re.sub(r"[^a-z0-9]", "", s)
+    while True:
+        nxt = LEADING_META_RE.sub("", s)
+        if nxt == s:
+            break
+        s = nxt
+    s = re.sub(r"\b(radio|short)\s+edit\b", " ", s, flags=re.I)
+    s = re.sub(r"\b\d{1,2}[abm]\b", " ", s, flags=re.I)
+    s = re.sub(r"\b\d{2,3}\s*bpm\b", " ", s, flags=re.I)
+    s = s.lower().replace("&", " ")
+    raw_tokens = re.findall(r"[a-z0-9]+", s)
+
+    tokens = set()
+    for tok in raw_tokens:
+        if tok in STOP_WORDS:
+            continue
+        if len(tok) == 1 and not tok.isdigit():
+            continue
+        tokens.add(tok)
+
+    mods = tokens & REMIX_MODIFIERS
+    core = tokens - REMIX_MODIFIERS
+    flat = "".join(sorted(tokens))
+    return {"core": core, "mods": mods, "flat": flat}
 
 
-def is_owned_track(title: str, owned_keys: set) -> bool:
-    key = normalize_key(title)
-    if not key:
+def normalize_key(text: str) -> str:
+    info = tokenize_title(text)
+    return info["flat"]
+
+
+def is_owned_track(title: str, owned_profiles: list) -> bool:
+    t_info = tokenize_title(title)
+    t_core = t_info["core"]
+    t_mods = t_info["mods"]
+    if not t_core:
         return False
-    if key in owned_keys:
-        return True
-    if len(key) >= 12:
-        for o_key in owned_keys:
-            if len(o_key) >= 12 and (key in o_key or o_key in key):
-                return True
+
+    for o_info in owned_profiles:
+        if t_info["flat"] and t_info["flat"] == o_info["flat"]:
+            return True
+        if t_mods != o_info["mods"]:
+            continue
+        o_core = o_info["core"]
+        if not o_core:
+            continue
+        common = t_core & o_core
+        min_len = min(len(t_core), len(o_core))
+        if min_len >= 2 and len(common) >= 2 and (len(common) / min_len) >= 0.80:
+            return True
+        if min_len == 1 and len(common) == 1 and len(next(iter(common))) >= 6:
+            return True
+
     return False
 
 
@@ -100,7 +145,6 @@ def is_valid_soundcloud_track(url: str) -> bool:
 
 
 def fetch_preview_info(gate_url: str) -> dict:
-    """Inspect a track's gate page to find an embeddable audio/SoundCloud/Spotify/YouTube preview."""
     try:
         resp = requests.get(gate_url, headers=HEADERS, timeout=12)
         if resp.status_code != 200:
@@ -108,7 +152,6 @@ def fetch_preview_info(gate_url: str) -> dict:
         html = resp.text
         soup = BeautifulSoup(html, "html.parser")
 
-        # 1. Check SoundCloud widget iframe or direct SoundCloud track links
         for iframe in soup.find_all("iframe", src=True):
             src = iframe["src"]
             if "w.soundcloud.com/player" in src:
@@ -128,7 +171,6 @@ def fetch_preview_info(gate_url: str) -> dict:
             if is_valid_soundcloud_track(sc_url):
                 return {"preview_type": "soundcloud", "preview_url": sc_url}
 
-        # 2. Check direct audio tags or og:audio meta tag
         og_audio = soup.find("meta", attrs={"property": "og:audio"}) or soup.find("meta", attrs={"name": "og:audio"})
         if og_audio and og_audio.get("content", "").startswith("http"):
             return {"preview_type": "audio", "preview_url": og_audio["content"].strip()}
@@ -138,7 +180,6 @@ def fetch_preview_info(gate_url: str) -> dict:
             if src.startswith("http"):
                 return {"preview_type": "audio", "preview_url": src}
 
-        # 3. Check Spotify track link
         sp_match = re.search(r"https?://open\.spotify\.com/(?:embed/)?track/([a-zA-Z0-9]{22})", html)
         if sp_match:
             track_id = sp_match.group(1)
@@ -147,7 +188,6 @@ def fetch_preview_info(gate_url: str) -> dict:
                 "preview_url": f"https://open.spotify.com/embed/track/{track_id}?theme=0"
             }
 
-        # 4. Check YouTube video link
         yt_match = re.search(r"https?://(?:www\.)?(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([a-zA-Z0-9_-]{11})", html)
         if yt_match:
             vid_id = yt_match.group(1)
@@ -174,23 +214,25 @@ def load_existing(path: str = "tracks.json") -> list:
         return []
 
 
-def load_owned_keys(path: str = "owned_tracks.json") -> set:
+def load_owned_profiles(path: str = "owned_tracks.json") -> list:
     if not os.path.exists(path):
-        return set()
+        return []
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
             raw_list = data.get("tracks", []) if isinstance(data, dict) else data
-            keys = set()
+            profiles = []
+            seen_flats = set()
             for item in raw_list:
                 name = item.get("title", "") if isinstance(item, dict) else str(item)
-                k = normalize_key(name)
-                if k:
-                    keys.add(k)
-            return keys
+                info = tokenize_title(name)
+                if info["core"] and info["flat"] not in seen_flats:
+                    seen_flats.add(info["flat"])
+                    profiles.append(info)
+            return profiles
     except Exception as exc:
         print(f"Warning: could not read {path}: {exc}")
-        return set()
+        return []
 
 
 def parse_hypeddit(soup: BeautifulSoup, base_url: str, default_genre: str) -> list:
@@ -291,12 +333,12 @@ def parse_droploud(soup: BeautifulSoup, base_url: str, default_genre: str) -> li
 
 
 def main():
-    owned_keys = load_owned_keys("owned_tracks.json")
-    print(f"Loaded {len(owned_keys)} owned local tracks from owned_tracks.json")
+    owned_profiles = load_owned_profiles("owned_tracks.json")
+    print(f"Loaded {len(owned_profiles)} owned local tracks from owned_tracks.json")
 
     existing_tracks = load_existing("tracks.json")
     for t in existing_tracks:
-        t["is_duplicate"] = is_owned_track(t.get("title", ""), owned_keys)
+        t["is_duplicate"] = is_owned_track(t.get("title", ""), owned_profiles)
 
     seen_urls = {t.get("url", "").rstrip("/") for t in existing_tracks}
     seen_keys = {normalize_key(t.get("title", "")) for t in existing_tracks}
@@ -367,7 +409,7 @@ def main():
                     "platform": platform,
                     "genre": detected_genre,
                     "is_edit": is_edit,
-                    "is_duplicate": is_owned_track(title, owned_keys),
+                    "is_duplicate": is_owned_track(title, owned_profiles),
                     "found_at": timestamp_label,
                     "found_iso": iso_now,
                 }
@@ -379,7 +421,6 @@ def main():
 
         time.sleep(1.2)
 
-    # Backfill audio previews for up to 20 older tracks that don't have one yet
     for t in existing_tracks:
         if preview_lookups >= MAX_PREVIEW_LOOKUPS:
             break
