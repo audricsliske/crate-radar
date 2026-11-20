@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0b0d12" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Crate Radar</title>
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0d12'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%2300e5ff' stroke-width='4'/%3E%3Ccircle cx='32' cy='32' r='6' fill='%23a3ff12'/%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --card: #141821;
+      --card-hover: #1a202c;
+      --border: #232a38;
+      --text: #f3f6fc;
+      --muted: #8b96ab;
+      --cyan: #00e5ff;
+      --lime: #a3ff12;
+      --purple: #b388ff;
+      --danger: #ff5252;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: 64px;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(11, 13, 18, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px 12px;
+    }
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 760px;
+      margin: 0 auto 10px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.4px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 10px var(--lime);
+    }
+    .status {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: right;
+    }
+    .controls {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .search-row {
+      display: flex;
+      gap: 8px;
+    }
+    input[type="search"] {
+      flex: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.92rem;
+      outline: none;
+    }
+    input[type="search"]:focus {
+      border-color: var(--cyan);
+    }
+    .toggle-hidden-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 10px;
+      padding: 0 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .toggle-hidden-btn.active {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+    .pills {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .pills::-webkit-scrollbar { display: none; }
+    .pill {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .pill.active {
+      background: var(--cyan);
+      color: #05070a;
+      border-color: var(--cyan);
+    }
+    main {
+      max-width: 760px;
+      margin: 14px auto 0;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .summary-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 0 2px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s ease;
+    }
+    .card:hover { border-color: #323c50; }
+    .card.is-hidden { opacity: 0.55; }
+    .meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.72rem;
+    }
+    .badge {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .badge-hypeddit { background: rgba(0, 229, 255, 0.14); color: var(--cyan); }
+    .badge-droploud { background: rgba(179, 136, 255, 0.16); color: var(--purple); }
+    .badge-genre { background: rgba(255, 255, 255, 0.07); color: var(--text); }
+    .badge-edit { background: rgba(163, 255, 18, 0.15); color: var(--lime); }
+    .time { margin-left: auto; color: var(--muted); }
+    .track-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 8px;
+    }
+    .btn {
+      border: 1px solid var(--border);
+      background: #1b212e;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-copy.copied {
+      background: rgba(163, 255, 18, 0.2);
+      border-color: var(--lime);
+      color: var(--lime);
+    }
+    .btn-open {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: rgba(0, 229, 255, 0.35);
+      color: var(--cyan);
+    }
+    .btn-done {
+      padding: 9px 14px;
+      color: var(--muted);
+    }
+    .btn-done:hover { color: var(--text); }
+    .empty {
+      background: var(--card);
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 28px 18px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.9rem;
+    }
+    .empty strong { color: var(--text); display: block; margin-bottom: 6px; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="top-row">
+      <div class="brand"><span class="dot"></span> CRATE RADAR</div>
+      <div class="status" id="lastUpdated">Loading...</div>
+    </div>
+    <div class="controls">
+      <div class="search-row">
+        <input type="search" id="searchInput" placeholder="Search artist, flip, edit, keyword..." />
+        <button class="toggle-hidden-btn" id="toggleHiddenBtn">Show Done (0)</button>
+      </div>
+      <div class="pills" id="filterPills">
+        <button class="pill active" data-filter="ALL">All</button>
+        <button class="pill" data-filter="Dubstep">Dubstep</button>
+        <button class="pill" data-filter="Trap">Trap</button>
+        <button class="pill" data-filter="Afro House">Afro House</button>
+        <button class="pill" data-filter="EDITS">Flips &amp; Edits</button>
+        <button class="pill" data-filter="Hypeddit">Hypeddit</button>
+        <button class="pill" data-filter="Droploud">Droploud</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="summary-bar">
+      <span id="countLabel">0 tracks</span>
+      <span>1-tap copy &rarr; paste in SoundCloud / pool</span>
+    </div>
+    <div id="feed"></div>
+  </main>
+
+  <script>
+    const DONE_KEY = "crate_radar_done_v1";
+    let allTracks = [];
+    let activeFilter = "ALL";
+    let showDone = false;
+
+    function getDoneSet() {
+      try {
+        return new Set(JSON.parse(localStorage.getItem(DONE_KEY) || "[]"));
+      } catch {
+        return new Set();
+      }
+    }
+
+    function saveDoneSet(set) {
+      localStorage.setItem(DONE_KEY, JSON.stringify([...set]));
+    }
+
+    function toggleDone(trackKey) {
+      const done = getDoneSet();
+      if (done.has(trackKey)) done.delete(trackKey);
+      else done.add(trackKey);
+      saveDoneSet(done);
+      render();
+    }
+
+    async function copyText(text, btn) {
+      try {
+        await navigator.clipboard.writeText(text);
+        const orig = btn.textContent;
+        btn.textContent = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove("copied");
+        }, 1200);
+      } catch {
+        prompt("Copy track name:", text);
+      }
+    }
+
+    function render() {
+      const feed = document.getElementById("feed");
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const doneSet = getDoneSet();
+
+      document.getElementById("toggleHiddenBtn").textContent =
+        (showDone ? "Hide Done (" : "Show Done (") + doneSet.size + ")";
+      document.getElementById("toggleHiddenBtn").classList.toggle("active", showDone);
+
+      const filtered = allTracks.filter(t => {
+        const key = t.url || t.title;
+        const isDone = doneSet.has(key);
+        if (!showDone && isDone) return false;
+
+        if (activeFilter === "EDITS" && !t.is_edit) return false;
+        if (["Dubstep", "Trap", "Afro House"].includes(activeFilter) && t.genre !== activeFilter) return false;
+        if (["Hypeddit", "Droploud"].includes(activeFilter) && t.platform !== activeFilter) return false;
+
+        if (query) {
+          const hay = `${t.title} ${t.genre} ${t.platform}`.toLowerCase();
+          if (!hay.includes(query)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById("countLabel").textContent =
+        `${filtered.length} track${filtered.length === 1 ? "" : "s"}`;
+
+      if (!filtered.length) {
+        feed.innerHTML = `
+          <div class="empty">
+            <strong>No tracks in this view yet</strong>
+            If you just set this up, go to your GitHub repo &rarr; <b>Actions</b> &rarr; <b>Scan New Tracks</b> &rarr; click <b>Run workflow</b> once to pull your first batch.
+          </div>`;
+        return;
+      }
+
+      feed.innerHTML = "";
+      filtered.forEach(track => {
+        const key = track.url || track.title;
+        const isDone = doneSet.has(key);
+        const card = document.createElement("div");
+        card.className = "card" + (isDone ? " is-hidden" : "");
+
+        const platClass = track.platform === "Droploud" ? "badge-droploud" : "badge-hypeddit";
+        card.innerHTML = `
+          <div class="meta">
+            <span class="badge ${platClass}">${track.platform}</span>
+            <span class="badge badge-genre">${track.genre}</span>
+            ${track.is_edit ? '<span class="badge badge-edit">Flip / Edit</span>' : ""}
+            <span class="time">${track.found_at || ""}</span>
+          </div>
+          <div class="track-title"></div>
+          <div class="actions">
+            <button class="btn btn-copy">Copy Name</button>
+            <a class="btn btn-open" target="_blank" rel="noopener noreferrer">Open Gate &nearr;</a>
+            <button class="btn btn-done">${isDone ? "Restore" : "✓ Done"}</button>
+          </div>
+        `;
+
+        card.querySelector(".track-title").textContent = track.title;
+        const copyBtn = card.querySelector(".btn-copy");
+        copyBtn.onclick = () => copyText(track.title, copyBtn);
+
+        const openLink = card.querySelector(".btn-open");
+        openLink.href = track.url;
+
+        const doneBtn = card.querySelector(".btn-done");
+        doneBtn.onclick = () => toggleDone(key);
+
+        feed.appendChild(card);
+      });
+    }
+
+    document.getElementById("filterPills").addEventListener("click", e => {
+      if (!e.target.classList.contains("pill")) return;
+      document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+      e.target.classList.add("active");
+      activeFilter = e.target.dataset.filter;
+      render();
+    });
+
+    document.getElementById("searchInput").addEventListener("input", render);
+    document.getElementById("toggleHiddenBtn").addEventListener("click", () => {
+      showDone = !showDone;
+      render();
+    });
+
+    async function init() {
+      try {
+        const res = await fetch("./tracks.json?v=" + Date.now());
+        const data = await res.json();
+        allTracks = data.tracks || [];
+        document.getElementById("lastUpdated").textContent = data.last_updated || "Ready";
+      } catch (err) {
+        document.getElementById("lastUpdated").textContent = "Waiting for first scan";
+      }
+      render();
+    }
+
+    init();
+  </script>
+</body>
+</html>
