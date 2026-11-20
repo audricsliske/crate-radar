@@ -1,5 +1,476 @@
 {
-  "last_updated": "Not scanned yet \u2014 run your first scan in GitHub Actions",
-  "total_tracks": 0,
-  "tracks": []
+  "last_updated": "Nov 20, 01:14 PM PHT",
+  "total_tracks": 47,
+  "tracks": [
+    {
+      "id": "wanttogetyourmusicfeatur_1795151644",
+      "title": "Want to get your music featured here? - Promote Now",
+      "url": "https://hypeddit.com/track/o4sbzr",
+      "platform": "Hypeddit",
+      "genre": "Dubstep",
+      "is_edit": false,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "kyotofixionflip_1795151644",
+      "title": "Kyoto (FIXION FLIP)",
+      "url": "https://droploud.com/track/02deb2c2-c95d-41dc-9151-d7e642ad143b",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "sweetescapemachakisportm_1795151644",
+      "title": "SWEET ESCAPE (MACHAKI & SPORTMODE REMIX)",
+      "url": "https://droploud.com/track/91c5d0c5-5c42-46f2-96b5-d4f87158993a",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "souljaboycrankthatwhzlyr_1795151644",
+      "title": "Soulja Boy - Crank That [WHZLY REMIX]",
+      "url": "https://droploud.com/track/fec1279e-9c59-427a-a8ea-196632e221cf",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "holshelistenstoriddimamo_1795151644",
+      "title": "HOL! - She Listens To Riddim (Amoeba Flip)",
+      "url": "https://droploud.com/track/b88101ac-fc8e-419f-842c-b4459ffcea98",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "lynydiscjockeyrjwlkrflip_1795151644",
+      "title": "LYNY - DISC JOCKEY (RJ WLKR FLIP)",
+      "url": "https://droploud.com/track/3b7f4018-3e62-4088-ac0c-f3ed15cacc52",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "theweekndthehillsspoonef_1795151644",
+      "title": "THE WEEKND - THE HILLS (SPOONE Flip)",
+      "url": "https://droploud.com/track/b30a868b-7234-4db8-ab06-bde67e8071a4",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "tippin_1795151644",
+      "title": "TIPPIN",
+      "url": "https://droploud.com/track/d786bd85-ac48-4645-9113-78075b2253dc",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": false,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "skrillexisoxofuzewolfiex_1795151644",
+      "title": "Skrillex & ISOxo - FUZE (Wolfie x Goat Dubz Remix)",
+      "url": "https://droploud.com/track/3b55309b-286e-4ce7-86e6-68e0af631879",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "crankatwoolifuxwithusmor_1795151644",
+      "title": "Crankat, Wooli - Fux With Us (Morbeato & NJOY Remix)",
+      "url": "https://droploud.com/track/fc6dcebd-705d-4b76-9cb1-23ad643e13a2",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "destinyschildsaymynamebl_1795151644",
+      "title": "Destiny's Child - Say My Name (BLOOM x HAGS x EYEWITNESS Remix) final Master",
+      "url": "https://droploud.com/track/d2762ab8-bf13-41bb-bc2b-91b15b72676a",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "hongkongdelaremix_1795151644",
+      "title": "hong kong - dela remix",
+      "url": "https://droploud.com/track/7f45e89f-dd4c-404f-a5b1-ebb21ff95cb2",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "badromancenevercriebig91_1795151644",
+      "title": "Bad Romance (Nevercrie, Big91 & moon Edit)",
+      "url": "https://droploud.com/track/bd39aea3-70b4-41ad-b7db-65284cf7dbca",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "bbhmmsaintrastrapremix_1795151644",
+      "title": "BBHMM ( SAINT RAS TRAP REMIX )",
+      "url": "https://droploud.com/track/f6a7dd9c-3c68-435c-a25c-178f96a1e42c",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "screamshoutrexydexyremix_1795151644",
+      "title": "Scream & Shout (REXY=DEXY Remix)",
+      "url": "https://droploud.com/track/43e8e58e-8643-4e94-91cb-8a7dc0c2da74",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "bluebirdlaiondatrackedit_1795151644",
+      "title": "Blue Bird (Lai On Da Track Edit)",
+      "url": "https://droploud.com/track/623879b2-ec5a-42c3-ba88-832470dc2322",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "sawadikadelaremix_1795151644",
+      "title": "sawadika - dela remix",
+      "url": "https://droploud.com/track/94689dbd-98dd-4a65-bef6-12de453de27d",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "sawadikafoxelaremixjerse_1795151644",
+      "title": "SaWaDiKa (Foxela Remix) [JERSEY CLUB + TRAP]",
+      "url": "https://droploud.com/track/c0943b01-30ad-41d8-921a-2021cf2a40a5",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "workaaprockydelaflip_1795151644",
+      "title": "Work - A$AP ROCKY ( dela flip )",
+      "url": "https://droploud.com/track/9220e9c4-2060-42f1-8f13-78f1af31f122",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "weaintdone_1795151644",
+      "title": "WE AIN'T DONE",
+      "url": "https://droploud.com/track/3cecca6e-954d-4694-9648-84c55deec881",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": false,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "2ne1iamthebestkvrltrapba_1795151644",
+      "title": "2ne1 - I Am The Best (KVRL Trap Baile Edit)",
+      "url": "https://droploud.com/track/cddef4b6-b49f-4547-8457-57b5d72ec89d",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "timbalandgiveittomejaydi_1795151644",
+      "title": "Timbaland - Give It To Me (Jay Dizzle & Howard Hill Edit)",
+      "url": "https://droploud.com/track/0d4a51f2-d0fd-4fb3-aa5f-a13b763c1751",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "rihannadisturbiajaydizzl_1795151644",
+      "title": "Rihanna - Disturbia (Jay Dizzle & Howard Hill Remix)",
+      "url": "https://droploud.com/track/eeb47840-0cc6-41c8-abde-0b1b5690f771",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "bulin47xkevinwaidamehomb_1795151644",
+      "title": "Bulin 47 x Kevin Wai - Dame Hombro (Jesús Fernández Remix)",
+      "url": "https://droploud.com/track/06a621a1-73f6-4f7c-b875-90de5292b512",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "lykkeliifollowriversadda_1795151644",
+      "title": "Lykke Li - I Follow Rivers (Addal Remix)",
+      "url": "https://droploud.com/track/bc209c94-f20c-4c34-b214-2c14fcb198e8",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "dawindessertlinobottarox_1795151644",
+      "title": "Dawin - Dessert (Lino Bottaro x 5HOURS x Francesco Pascazi Remix) [PITCHED]",
+      "url": "https://droploud.com/track/dd53e568-009e-4c18-9ede-eb6db7dd4d65",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "imaelangelbadtimesjaydiz_1795151644",
+      "title": "Imael Angel - Bad times (Jay Dizzle & Howard Hill Remix)",
+      "url": "https://droploud.com/track/cbd317da-f228-4980-952c-19b11c409406",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "snapthepowertittoroexten_1795151644",
+      "title": "SNAP - THE POWER (TITTO (Ro) EXTENDED REMIX)",
+      "url": "https://droploud.com/track/f75e40d7-d9a0-4a60-a22c-13d3d677624a",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "tatemcraehousewifejaydiz_1795151644",
+      "title": "Tate McRae - Housewife (Jay Dizzle & Howard Hill Remix)",
+      "url": "https://droploud.com/track/ec70ab59-8c81-4211-b9f6-42b358c3b927",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "ciara12stepjaydizzlehowa_1795151644",
+      "title": "Ciara - 1, 2 Step (Jay Dizzle & Howard Hill Remix)",
+      "url": "https://droploud.com/track/6d7d4d58-f027-48ba-b0ee-c89392134b3b",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "chimbalasemenotalstcntrl_1795151644",
+      "title": "Chimbala - Se Me Nota (LST CNTRL Afro Remix) [Free Download]",
+      "url": "https://droploud.com/track/c38eb9bd-89a4-473d-89f9-deac83c053b5",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "flowerinahurricanegta6so_1795151644",
+      "title": "Flower In A Hurricane - GTA 6 soundtrack (CINQUINO EDIT)",
+      "url": "https://droploud.com/track/6625b969-7c5d-4bc6-8d76-ea4728005402",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "nickiminajpondthealarmw3_1795151644",
+      "title": "Nicki Minaj - Pond The Alarm (W3TT3R REMIX)",
+      "url": "https://droploud.com/track/6fd4246a-3837-418d-a99f-b21416cd56e8",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "massanothefeelingphillip_1795151644",
+      "title": "Massano - The Feeling (Phillip X Remix)",
+      "url": "https://droploud.com/track/e4f09a02-ab18-421d-a0bd-56ab05e70aad",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "clooneecatchmeinamsterda_1795151644",
+      "title": "Cloonee - Catch Me In Amsterdam(KRTK Remix)",
+      "url": "https://droploud.com/track/c0a85e2f-9b12-4dc1-832b-03c83ff3ea94",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "prospamasterplanhayatxte_1795151644",
+      "title": "Prospa - Masterplan(HayaT x TESS Remix)",
+      "url": "https://droploud.com/track/7fa4d7c6-06eb-4e57-aaf4-019c10b991c6",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "fatboyslimtherockafeller_1795151644",
+      "title": "Fatboy Slim - The Rockafeller Skank(Sideways Edit) [PRNRML]",
+      "url": "https://droploud.com/track/a8999bb6-3981-4cdd-a8ce-19a58d9e2415",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "gtaviflowerinahurricanew_1795151644",
+      "title": "GTA VI - FLOWER IN A HURRICANE(WILLØ REMIX)",
+      "url": "https://droploud.com/track/a52ae672-699d-4f37-b5eb-90fb91d6c295",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "zoolanderjamestribelarki_1795151644",
+      "title": "Zoolander(James Tribe & Larkinn Remix)",
+      "url": "https://droploud.com/track/1bb6deaf-851a-4c8e-aff5-e302a4c4c93b",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "hotnaturedbenedictionjor_1795151644",
+      "title": "Hot Natured - Benediction(Jordan Dae X AGEO Remix)",
+      "url": "https://droploud.com/track/6f17ba65-5fa3-4612-8b92-cb826d21fe66",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "tameimpaladraculamroedit_1795151644",
+      "title": "Tame Impala - Dracula[MËRO Edit] (extended mix)",
+      "url": "https://droploud.com/track/227a8c2e-9327-4ff6-8bc7-671dc2bf71fb",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "youshouldbedancinglennyi_1795151644",
+      "title": "You Should Be Dancing[LENny(IT) & ALB[I]T Remix]",
+      "url": "https://droploud.com/track/384d6ee4-3029-4b91-8823-d46f4b601734",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "nellyfurtadotimbalandpro_1795151644",
+      "title": "Nelly Furtado, Timbaland - Promiscuous(ANDY CLY REMIX) /// FREE DL",
+      "url": "https://droploud.com/track/c6b30ebd-e627-4d58-a03b-8851fb250fd7",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "ciara12stepgoshfatherrem_1795151644",
+      "title": "Ciara - 1, 2 Step[Goshfather Remix]",
+      "url": "https://droploud.com/track/1c234798-e2f6-4195-bb2a-297b331403a8",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "armandvanheldenconscienc_1795151644",
+      "title": "Armand Van Helden - Conscience(5HOURS & KEVIN GUZZONI Remix)",
+      "url": "https://droploud.com/track/57d43a15-cba9-4dd0-8662-a9d44720d6ae",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "wantyouinmysoulmikeyoung_1795151644",
+      "title": "Want You In My Soul (Mike Younger Edit) - Lovebirds ft. Stee Downes",
+      "url": "https://droploud.com/track/581b031e-a58a-40c4-b3d0-d0c3bca32d76",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    },
+    {
+      "id": "justiceflowerinahurrican_1795151644",
+      "title": "Justice - Flower in a Hurricane(Los Padres Afro Remix)",
+      "url": "https://droploud.com/track/4f8eb759-ff1c-4e6e-a7d0-ecd8331b8733",
+      "platform": "Droploud",
+      "genre": "Discover",
+      "is_edit": true,
+      "found_at": "Nov 20, 01:14 PM PHT",
+      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+    }
+  ]
 }
