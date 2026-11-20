@@ -21,14 +21,23 @@ HEADERS = {
 }
 
 SOURCES = [
+    # Hypeddit Top Downloads Charts
     {"platform": "Hypeddit", "genre": "Dubstep", "url": "https://hypeddit.com/charts/downloads/genre/dubstep", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Trap", "url": "https://hypeddit.com/charts/downloads/genre/trap", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Afro House", "url": "https://hypeddit.com/charts/downloads/genre/afro-house", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Bass", "url": "https://hypeddit.com/charts/downloads/genre/bass", "strict_filter": True},
+    # Hypeddit New Releases (Dig Deeper into fresh uploads)
+    {"platform": "Hypeddit", "genre": "Dubstep", "url": "https://hypeddit.com/newreleases/genre/dubstep", "strict_filter": False},
+    {"platform": "Hypeddit", "genre": "Trap", "url": "https://hypeddit.com/newreleases/genre/trap", "strict_filter": False},
+    {"platform": "Hypeddit", "genre": "Afro House", "url": "https://hypeddit.com/newreleases/genre/afro-house", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "New Releases", "url": "https://hypeddit.com/newreleases/genre/all", "strict_filter": True},
+    # Droploud Genre & Deeper Pages
     {"platform": "Droploud", "genre": "Dubstep", "url": "https://droploud.com/genre/dubstep", "strict_filter": False},
+    {"platform": "Droploud", "genre": "Dubstep", "url": "https://droploud.com/genre/dubstep?page=2", "strict_filter": False},
     {"platform": "Droploud", "genre": "Trap", "url": "https://droploud.com/genre/trap", "strict_filter": False},
+    {"platform": "Droploud", "genre": "Trap", "url": "https://droploud.com/genre/trap?page=2", "strict_filter": False},
     {"platform": "Droploud", "genre": "Afro House", "url": "https://droploud.com/genre/afro-house", "strict_filter": False},
+    {"platform": "Droploud", "genre": "Afro House", "url": "https://droploud.com/genre/afro-house?page=2", "strict_filter": False},
     {"platform": "Droploud", "genre": "Discover", "url": "https://droploud.com/discover", "strict_filter": True},
 ]
 
@@ -349,7 +358,7 @@ def main():
 
     new_tracks = []
     preview_lookups = 0
-    MAX_PREVIEW_LOOKUPS = 40
+    MAX_PREVIEW_LOOKUPS = 60
 
     for src in SOURCES:
         url = src["url"]
@@ -400,7 +409,7 @@ def main():
                 if preview_lookups < MAX_PREVIEW_LOOKUPS:
                     preview = fetch_preview_info(t_url)
                     preview_lookups += 1
-                    time.sleep(0.4)
+                    time.sleep(0.35)
 
                 track_entry = {
                     "id": t_key[:24] + "_" + str(int(now_pht.timestamp())),
@@ -419,7 +428,7 @@ def main():
         except Exception as exc:
             print(f"  Error scanning {url}: {exc}")
 
-        time.sleep(1.2)
+        time.sleep(1.0)
 
     for t in existing_tracks:
         if preview_lookups >= MAX_PREVIEW_LOOKUPS:
@@ -429,11 +438,11 @@ def main():
             t["preview_checked"] = True
             t.update(preview)
             preview_lookups += 1
-            time.sleep(0.4)
+            time.sleep(0.35)
 
     print(f"Total brand-new tracks added: {len(new_tracks)}")
 
-    combined = (new_tracks + existing_tracks)[:400]
+    combined = (new_tracks + existing_tracks)[:800]
 
     output = {
         "last_updated": timestamp_label,
