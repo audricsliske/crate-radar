@@ -3,7 +3,7 @@ import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,13 +20,11 @@ HEADERS = {
 }
 
 SOURCES = [
-    # Hypeddit genre download charts & new releases
     {"platform": "Hypeddit", "genre": "Dubstep", "url": "https://hypeddit.com/charts/downloads/genre/dubstep", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Trap", "url": "https://hypeddit.com/charts/downloads/genre/trap", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Afro House", "url": "https://hypeddit.com/charts/downloads/genre/afro-house", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Bass", "url": "https://hypeddit.com/charts/downloads/genre/bass", "strict_filter": True},
     {"platform": "Hypeddit", "genre": "New Releases", "url": "https://hypeddit.com/newreleases/genre/all", "strict_filter": True},
-    # Droploud genre charts & discover
     {"platform": "Droploud", "genre": "Dubstep", "url": "https://droploud.com/genre/dubstep", "strict_filter": False},
     {"platform": "Droploud", "genre": "Trap", "url": "https://droploud.com/genre/trap", "strict_filter": False},
     {"platform": "Droploud", "genre": "Afro House", "url": "https://droploud.com/genre/afro-house", "strict_filter": False},
@@ -36,13 +34,42 @@ SOURCES = [
 EDIT_KEYWORDS = re.compile(r"\b(flip|edit|bootleg|vip|remix|rework|mashup|refix)\b", re.I)
 GENRE_KEYWORDS = re.compile(r"\b(dubstep|riddim|trap|afro\s*house|afrotech|afro-tech|bass)\b", re.I)
 
+AUDIO_EXT_RE = re.compile(r"\.(mp3|wav|flac|aiff|aif|m4a|aac|ogg|alac|wma)$", re.I)
+TRACK_NUM_RE = re.compile(r"^\d{1,3}[\s._-]+")
+DJ_NOISE_TAGS_RE = re.compile(
+    r"[\(\[]\s*(extended\s*mix|original\s*mix|radio\s*edit|clean|dirty|intro|outro|"
+    r"short\s*edit|club\s*mix|instrumental|acapella|free\s*download|free\s*dl|"
+    r"320\s*kbps|320|master|hq|explicit)\s*[\)\]]",
+    re.I,
+)
+
 
 def clean_text(text: str) -> str:
     return re.sub(r"\s+", " ", (text or "")).strip()
 
 
 def normalize_key(text: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", text.lower())
+    s = clean_text(text)
+    s = AUDIO_EXT_RE.sub("", s)
+    s = TRACK_NUM_RE.sub("", s)
+    s = DJ_NOISE_TAGS_RE.sub("", s)
+    s = s.lower()
+    s = s.replace("&", "and")
+    s = re.sub(r"\b(feat|ft)\.?\b", "", s)
+    return re.sub(r"[^a-z0-9]", "", s)
+
+
+def is_owned_track(title: str, owned_keys: set) -> bool:
+    key = normalize_key(title)
+    if not key:
+        return False
+    if key in owned_keys:
+        return True
+    if len(key) >= 12:
+        for o_key in owned_keys:
+            if len(o_key) >= 12 and (key in o_key or o_key in key):
+                return True
+    return False
 
 
 def load_existing(path: str = "tracks.json") -> list:
@@ -57,11 +84,29 @@ def load_existing(path: str = "tracks.json") -> list:
         return []
 
 
+def load_owned_keys(path: str = "owned_tracks.json") -> set:
+    if not os.path.exists(path):
+        return set()
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            raw_list = data.get("tracks", []) if isinstance(data, dict) else data
+            keys = set()
+            for item in raw_list:
+                name = item.get("title", "") if isinstance(item, dict) else str(item)
+                k = normalize_key(name)
+                if k:
+                    keys.add(k)
+            return keys
+    except Exception as exc:
+        print(f"Warning: could not read {path}: {exc}")
+        return set()
+
+
 def parse_hypeddit(soup: BeautifulSoup, base_url: str, default_genre: str) -> list:
     found = []
     seen_local = set()
 
-    # Look for track links across Hypeddit chart/new release cards
     for a in soup.find_all("a", href=True):
         href = a["href"].strip()
         if "/track/" not in href:
@@ -70,10 +115,8 @@ def parse_hypeddit(soup: BeautifulSoup, base_url: str, default_genre: str) -> li
         if full_url in seen_local:
             continue
 
-        # Walk up to container card to extract title and artist cleanly
         container = a.find_parent(["li", "div", "article"]) or a
         raw_lines = [clean_text(x) for x in container.stripped_strings]
-        # Filter out UI noise
         noise = {
             "get this track", "play", "download", "free download", "promoted",
             "share", "copy link", "play on spotify", "save on spotify"
@@ -158,7 +201,13 @@ def parse_droploud(soup: BeautifulSoup, base_url: str, default_genre: str) -> li
 
 
 def main():
+    owned_keys = load_owned_keys("owned_tracks.json")
+    print(f"Loaded {len(owned_keys)} owned local tracks from owned_tracks.json")
+
     existing_tracks = load_existing("tracks.json")
+    for t in existing_tracks:
+        t["is_duplicate"] = is_owned_track(t.get("title", ""), owned_keys)
+
     seen_urls = {t.get("url", "").rstrip("/") for t in existing_tracks}
     seen_keys = {normalize_key(t.get("title", "")) for t in existing_tracks}
 
@@ -199,11 +248,9 @@ def main():
                 is_edit = bool(EDIT_KEYWORDS.search(title))
                 matches_genre_kw = bool(GENRE_KEYWORDS.search(title))
 
-                # For general pages (New Releases / Discover / Bass), require a genre or edit/flip keyword
                 if strict and not (is_edit or matches_genre_kw):
                     continue
 
-                # Refine genre label if title explicitly reveals Dubstep / Trap / Afro House
                 detected_genre = genre
                 if re.search(r"\b(dubstep|riddim)\b", title, re.I):
                     detected_genre = "Dubstep"
@@ -222,6 +269,7 @@ def main():
                     "platform": platform,
                     "genre": detected_genre,
                     "is_edit": is_edit,
+                    "is_duplicate": is_owned_track(title, owned_keys),
                     "found_at": timestamp_label,
                     "found_iso": iso_now,
                 })
@@ -233,7 +281,6 @@ def main():
 
     print(f"Total brand-new tracks added: {len(new_tracks)}")
 
-    # Prepend new tracks so newest appear first; cap at 400 items
     combined = (new_tracks + existing_tracks)[:400]
 
     output = {
