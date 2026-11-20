@@ -1,5 +1,5 @@
 {
-  "last_updated": "Nov 20, 01:14 PM PHT",
+  "last_updated": "Nov 20, 01:33 PM PHT",
   "total_tracks": 47,
   "tracks": [
     {
@@ -10,7 +10,11 @@
       "genre": "Dubstep",
       "is_edit": false,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://api.soundcloud.com/tracks/2431758837"
     },
     {
       "id": "kyotofixionflip_1795151644",
@@ -20,7 +24,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/fixion_official/kyoto-fixion-flip-final"
     },
     {
       "id": "sweetescapemachakisportm_1795151644",
@@ -30,7 +38,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/machakimusic/sweetescape"
     },
     {
       "id": "souljaboycrankthatwhzlyr_1795151644",
@@ -40,7 +52,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/whzly/crankthat"
     },
     {
       "id": "holshelistenstoriddimamo_1795151644",
@@ -50,7 +66,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/amoeba-mob/she-listens-to-amoeba"
     },
     {
       "id": "lynydiscjockeyrjwlkrflip_1795151644",
@@ -60,7 +80,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/rj-wlkr/lyny-disc-jockey-rj-wlkr-flip"
     },
     {
       "id": "theweekndthehillsspoonef_1795151644",
@@ -70,7 +94,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/spoonemusic/the-weeknd-the-hills-spoone-flip"
     },
     {
       "id": "tippin_1795151644",
@@ -80,7 +108,11 @@
       "genre": "Dubstep",
       "is_edit": false,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/overeazybeats/tippin-overeazy-1"
     },
     {
       "id": "skrillexisoxofuzewolfiex_1795151644",
@@ -90,7 +122,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/musicbywolfie/skrillex-isoxo-fuze-wolfie-x"
     },
     {
       "id": "crankatwoolifuxwithusmor_1795151644",
@@ -100,7 +136,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/official_njoy/crankat-wooli-fux-with-us"
     },
     {
       "id": "destinyschildsaymynamebl_1795151644",
@@ -110,7 +150,11 @@
       "genre": "Dubstep",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/bloom_beatz/destinys-child-say-my-name-1"
     },
     {
       "id": "hongkongdelaremix_1795151644",
@@ -120,7 +164,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/delachr/hong-kong-dela-remix"
     },
     {
       "id": "badromancenevercriebig91_1795151644",
@@ -130,7 +178,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/nvrcr/bad-romance-nevercrie-big91"
     },
     {
       "id": "bbhmmsaintrastrapremix_1795151644",
@@ -140,7 +192,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/saint-ras/bbhmm-saint-ras-trap-remix"
     },
     {
       "id": "screamshoutrexydexyremix_1795151644",
@@ -150,7 +206,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/rexy_dexy_music/screamandshout"
     },
     {
       "id": "bluebirdlaiondatrackedit_1795151644",
@@ -160,7 +220,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/laiondatrack/blue-bird-lai-on-da-track-edit"
     },
     {
       "id": "sawadikadelaremix_1795151644",
@@ -170,7 +234,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/delachr/sawadika-dela-remix"
     },
     {
       "id": "sawadikafoxelaremixjerse_1795151644",
@@ -180,7 +248,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/foxela/sawadika"
     },
     {
       "id": "workaaprockydelaflip_1795151644",
@@ -190,7 +262,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/delachr/work-a-ap-rocky-dela-flip"
     },
     {
       "id": "weaintdone_1795151644",
@@ -200,7 +276,11 @@
       "genre": "Trap",
       "is_edit": false,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/fossilsdub/we-aint-done"
     },
     {
       "id": "2ne1iamthebestkvrltrapba_1795151644",
@@ -210,7 +290,11 @@
       "genre": "Trap",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/user-389279778/2ne1-i-am-the-best-kvrl-trap"
     },
     {
       "id": "timbalandgiveittomejaydi_1795151644",
@@ -220,7 +304,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/drjaydizzle/tomegive"
     },
     {
       "id": "rihannadisturbiajaydizzl_1795151644",
@@ -230,7 +318,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/drjaydizzle/disturd"
     },
     {
       "id": "bulin47xkevinwaidamehomb_1795151644",
@@ -240,7 +332,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/jesus-fernandez-195526780/bulin-47-x-kevin-wai-dame"
     },
     {
       "id": "lykkeliifollowriversadda_1795151644",
@@ -250,7 +346,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/addal-remix/lykke-li-i-follow-rivers-addal-remix"
     },
     {
       "id": "dawindessertlinobottarox_1795151644",
@@ -260,7 +360,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/5hoursmusic2/dawin-dessert-lino-bottaro-x-1"
     },
     {
       "id": "imaelangelbadtimesjaydiz_1795151644",
@@ -270,7 +374,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/drjaydizzle/dabmites"
     },
     {
       "id": "snapthepowertittoroexten_1795151644",
@@ -280,7 +388,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/tiberiu-mtg/snap-the-power-master-final"
     },
     {
       "id": "tatemcraehousewifejaydiz_1795151644",
@@ -290,7 +402,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/drjaydizzle/mousefive"
     },
     {
       "id": "ciara12stepjaydizzlehowa_1795151644",
@@ -300,7 +416,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/drjaydizzle/stepladder"
     },
     {
       "id": "chimbalasemenotalstcntrl_1795151644",
@@ -310,7 +430,11 @@
       "genre": "Afro House",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/lstcntrlofficial/semenotalstcntrlafroremixfiltered"
     },
     {
       "id": "flowerinahurricanegta6so_1795151644",
@@ -320,7 +444,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/andrea-cinquino/flower-in-a-hurricane-gta-6"
     },
     {
       "id": "nickiminajpondthealarmw3_1795151644",
@@ -330,7 +458,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/w3tt3r/nicki-minaj-pond-the-alarm"
     },
     {
       "id": "massanothefeelingphillip_1795151644",
@@ -340,7 +472,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/phillip-x/massano-the-feeling-phillip-x"
     },
     {
       "id": "clooneecatchmeinamsterda_1795151644",
@@ -350,7 +486,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/krtk-310506343/cloonee-catch-me-in-amsterdam"
     },
     {
       "id": "prospamasterplanhayatxte_1795151644",
@@ -360,7 +500,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/dj-hayat/masterplan-hayat-x-tess-remix"
     },
     {
       "id": "fatboyslimtherockafeller_1795151644",
@@ -370,7 +514,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/paranormalsociety/fatboy-slim-the-rockafeller"
     },
     {
       "id": "gtaviflowerinahurricanew_1795151644",
@@ -380,7 +528,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/therealwillo/gta-vi-flower-in-a-hurricane-willo-remix"
     },
     {
       "id": "zoolanderjamestribelarki_1795151644",
@@ -390,7 +542,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/tribe_musicc/zoolanderremix"
     },
     {
       "id": "hotnaturedbenedictionjor_1795151644",
@@ -400,7 +556,11 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/jordan-dae-remixes/hot-natured-benediction-jordan-dae-ageo-remix"
     },
     {
       "id": "tameimpaladraculamroedit_1795151644",
@@ -410,7 +570,8 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false
     },
     {
       "id": "youshouldbedancinglennyi_1795151644",
@@ -420,7 +581,8 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false
     },
     {
       "id": "nellyfurtadotimbalandpro_1795151644",
@@ -430,7 +592,8 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false
     },
     {
       "id": "ciara12stepgoshfatherrem_1795151644",
@@ -440,7 +603,8 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false
     },
     {
       "id": "armandvanheldenconscienc_1795151644",
@@ -450,7 +614,8 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false
     },
     {
       "id": "wantyouinmysoulmikeyoung_1795151644",
@@ -460,7 +625,8 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false
     },
     {
       "id": "justiceflowerinahurrican_1795151644",
@@ -470,7 +636,8 @@
       "genre": "Discover",
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
-      "found_iso": "2026-11-20T13:14:04.589094+08:00"
+      "found_iso": "2026-11-20T13:14:04.589094+08:00",
+      "is_duplicate": false
     }
   ]
 }
