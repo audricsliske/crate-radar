@@ -1,7 +1,46 @@
 {
-  "last_updated": "Nov 20, 01:33 PM PHT",
-  "total_tracks": 47,
+  "last_updated": "Nov 20, 04:01 PM PHT",
+  "total_tracks": 50,
   "tracks": [
+    {
+      "id": "flipglorillamanepearsypo_1795161707",
+      "title": "GloRilla & Pooh Shiesty - MANE (pearsy. flip)",
+      "url": "https://droploud.com/track/a350ab28-5210-4f80-9ba1-3c9bdd024515",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 20, 04:01 PM PHT",
+      "found_iso": "2026-11-20T16:01:47.327266+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/pearsy_beats/glorilla-pooh-sheisty-mane-1"
+    },
+    {
+      "id": "editfilteredfingersjakki_1795161707",
+      "title": "Lil Jon - Snap Yo Fingers (More Jakkie Edit) FILTERED",
+      "url": "https://droploud.com/track/ccb70ceb-962f-42d6-878f-0b6cc99e2c91",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 20, 04:01 PM PHT",
+      "found_iso": "2026-11-20T16:01:47.327266+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/morejakkie/lil-jon-snap-yo-fingers-more"
+    },
+    {
+      "id": "ashkegruvmashup_1795161707",
+      "title": "ASHKE - GRUV MASHUP",
+      "url": "https://droploud.com/track/ca63a584-d913-455c-a17f-69d0ed9dade0",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 20, 04:01 PM PHT",
+      "found_iso": "2026-11-20T16:01:47.327266+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/perfectgruv/ashke-gruv-mashup"
+    },
     {
       "id": "wanttogetyourmusicfeatur_1795151644",
       "title": "Want to get your music featured here? - Promote Now",
@@ -571,7 +610,10 @@
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
       "found_iso": "2026-11-20T13:14:04.589094+08:00",
-      "is_duplicate": false
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/sachsentrance/tame-impala-dracula-mero-edit"
     },
     {
       "id": "youshouldbedancinglennyi_1795151644",
@@ -582,7 +624,10 @@
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
       "found_iso": "2026-11-20T13:14:04.589094+08:00",
-      "is_duplicate": false
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/lennysoundcloud/bee-gees-you-should-be-dancing-lennyit-albit-remix-radio-vrs"
     },
     {
       "id": "nellyfurtadotimbalandpro_1795151644",
@@ -593,7 +638,10 @@
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
       "found_iso": "2026-11-20T13:14:04.589094+08:00",
-      "is_duplicate": false
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/andycly_music/andy-cly-promiscuous-master"
     },
     {
       "id": "ciara12stepgoshfatherrem_1795151644",
@@ -604,7 +652,10 @@
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
       "found_iso": "2026-11-20T13:14:04.589094+08:00",
-      "is_duplicate": false
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/goshfather/ciara-1-2-step-goshfather"
     },
     {
       "id": "armandvanheldenconscienc_1795151644",
@@ -615,7 +666,10 @@
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
       "found_iso": "2026-11-20T13:14:04.589094+08:00",
-      "is_duplicate": false
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/5hoursmusic2/armand-van-helden-conscience"
     },
     {
       "id": "wantyouinmysoulmikeyoung_1795151644",
@@ -626,7 +680,10 @@
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
       "found_iso": "2026-11-20T13:14:04.589094+08:00",
-      "is_duplicate": false
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/mikeyoungerdj/mike-younger-want-you-ws"
     },
     {
       "id": "justiceflowerinahurrican_1795151644",
@@ -637,7 +694,10 @@
       "is_edit": true,
       "found_at": "Nov 20, 01:14 PM PHT",
       "found_iso": "2026-11-20T13:14:04.589094+08:00",
-      "is_duplicate": false
+      "is_duplicate": false,
+      "preview_checked": true,
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/lospadresexclusives/justice-flower-in-a-hurricane"
     }
   ]
 }
