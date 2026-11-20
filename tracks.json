@@ -1,5 +1,5 @@
 {
-  "last_updated": "Nov 20, 04:01 PM PHT",
+  "last_updated": "Nov 20, 11:11 PM PHT",
   "total_tracks": 50,
   "tracks": [
     {
@@ -13,7 +13,8 @@
       "found_at": "Nov 20, 04:01 PM PHT",
       "found_iso": "2026-11-20T16:01:47.327266+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/pearsy_beats/glorilla-pooh-sheisty-mane-1"
+      "preview_url": "https://soundcloud.com/pearsy_beats/glorilla-pooh-sheisty-mane-1",
+      "preview_checked": true
     },
     {
       "id": "editfilteredfingersjakki_1795161707",
@@ -26,7 +27,8 @@
       "found_at": "Nov 20, 04:01 PM PHT",
       "found_iso": "2026-11-20T16:01:47.327266+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/morejakkie/lil-jon-snap-yo-fingers-more"
+      "preview_url": "https://soundcloud.com/morejakkie/lil-jon-snap-yo-fingers-more",
+      "preview_checked": true
     },
     {
       "id": "ashkegruvmashup_1795161707",
@@ -39,7 +41,8 @@
       "found_at": "Nov 20, 04:01 PM PHT",
       "found_iso": "2026-11-20T16:01:47.327266+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/perfectgruv/ashke-gruv-mashup"
+      "preview_url": "https://soundcloud.com/perfectgruv/ashke-gruv-mashup",
+      "preview_checked": true
     },
     {
       "id": "wanttogetyourmusicfeatur_1795151644",
