@@ -191,6 +191,10 @@
       transition: border-color 0.15s ease;
     }
     .card:hover { border-color: #323c50; }
+    .card.is-playing {
+      border-color: var(--lime);
+      box-shadow: 0 0 0 1px rgba(163, 255, 18, 0.25);
+    }
     .card.is-duplicate {
       border-color: rgba(255, 171, 0, 0.35);
       background: rgba(20, 24, 33, 0.75);
@@ -229,18 +233,70 @@
     .card.is-duplicate .track-title {
       color: #c7d0e0;
     }
+    .player-box {
+      background: #0d1017;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      overflow: hidden;
+    }
+    .player-box iframe {
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      display: block;
+    }
+    .player-box audio {
+      width: 100%;
+      height: 38px;
+      display: block;
+    }
+    .fallback-listen {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--muted);
+      padding: 4px 2px;
+    }
+    .fallback-links {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .mini-link {
+      background: #1b212e;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 7px;
+      padding: 5px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .mini-link:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
     .actions {
       display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 8px;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 7px;
+    }
+    @media (max-width: 480px) {
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
     }
     .btn {
       border: 1px solid var(--border);
       background: #1b212e;
       color: var(--text);
       border-radius: 10px;
-      padding: 9px 12px;
-      font-size: 0.83rem;
+      padding: 9px 10px;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       text-align: center;
@@ -248,9 +304,19 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
     }
     .btn:active { transform: scale(0.98); }
+    .btn-listen {
+      background: rgba(163, 255, 18, 0.14);
+      border-color: rgba(163, 255, 18, 0.4);
+      color: var(--lime);
+    }
+    .btn-listen.playing {
+      background: var(--lime);
+      border-color: var(--lime);
+      color: #05070a;
+    }
     .btn-copy.copied {
       background: rgba(163, 255, 18, 0.2);
       border-color: var(--lime);
@@ -262,7 +328,7 @@
       color: var(--cyan);
     }
     .btn-done {
-      padding: 9px 14px;
+      padding: 9px 12px;
       color: var(--muted);
     }
     .btn-done:hover { color: var(--text); }
@@ -313,7 +379,7 @@
     <div class="summary-bar">
       <span id="countLabel">0 tracks</span>
       <button class="re-download-link" id="downloadOwnedBtn">Save owned_tracks.json for GitHub</button>
-      <span id="ownedLabel">0 local tracks synced</span>
+      <span id="ownedLabel">0 synced</span>
     </div>
     <div id="feed"></div>
   </main>
@@ -330,6 +396,7 @@
     let activeFilter = "ALL";
     let showDone = false;
     let hideDuplicates = false;
+    let playingTrackKey = null;
     let latestOwnedPayload = null;
 
     function normalizeKey(text) {
@@ -392,6 +459,48 @@
       else done.add(trackKey);
       saveDoneSet(done);
       render();
+    }
+
+    function togglePlay(trackKey) {
+      playingTrackKey = (playingTrackKey === trackKey) ? null : trackKey;
+      render();
+    }
+
+    function buildPlayerHTML(track) {
+      const encodedTitle = encodeURIComponent(track.title);
+      const scSearch = `https://soundcloud.com/search/sounds?q=${encodedTitle}`;
+      const ytSearch = `https://www.youtube.com/results?search_query=${encodedTitle}`;
+
+      if (track.preview_type === "soundcloud" && track.preview_url) {
+        const widgetSrc =
+          `https://w.soundcloud.com/player/?url=${encodeURIComponent(track.preview_url)}` +
+          `&color=%2300e5ff&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`;
+        return `<div class="player-box"><iframe height="110" scrolling="no" allow="autoplay" src="${widgetSrc}"></iframe></div>`;
+      }
+
+      if (track.preview_type === "audio" && track.preview_url) {
+        return `<div class="player-box"><audio controls autoplay preload="none" src="${track.preview_url}"></audio></div>`;
+      }
+
+      if (track.preview_type === "spotify" && track.preview_url) {
+        return `<div class="player-box"><iframe height="80" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" src="${track.preview_url}"></iframe></div>`;
+      }
+
+      if (track.preview_type === "youtube" && track.preview_url) {
+        return `<div class="player-box"><iframe height="165" allow="autoplay; encrypted-media" allowfullscreen src="${track.preview_url}"></iframe></div>`;
+      }
+
+      return `
+        <div class="player-box">
+          <div class="fallback-listen">
+            <span>Direct stream locked by gate — play via:</span>
+            <div class="fallback-links">
+              <a class="mini-link" href="${scSearch}" target="_blank" rel="noopener noreferrer">SoundCloud &nearr;</a>
+              <a class="mini-link" href="${ytSearch}" target="_blank" rel="noopener noreferrer">YouTube &nearr;</a>
+              <a class="mini-link" href="${track.url}" target="_blank" rel="noopener noreferrer">Gate Player &nearr;</a>
+            </div>
+          </div>
+        </div>`;
     }
 
     async function copyText(text, btn) {
@@ -520,8 +629,14 @@
         const key = track.url || track.title;
         const isDone = doneSet.has(key);
         const isDupe = isDuplicateTrack(track, ownedSet);
+        const isPlaying = (playingTrackKey === key);
+
         const card = document.createElement("div");
-        card.className = "card" + (isDupe ? " is-duplicate" : "") + (isDone ? " is-hidden" : "");
+        card.className =
+          "card" +
+          (isPlaying ? " is-playing" : "") +
+          (isDupe ? " is-duplicate" : "") +
+          (isDone ? " is-hidden" : "");
 
         const platClass = track.platform === "Droploud" ? "badge-droploud" : "badge-hypeddit";
         card.innerHTML = `
@@ -533,7 +648,9 @@
             <span class="time">${track.found_at || ""}</span>
           </div>
           <div class="track-title"></div>
+          ${isPlaying ? buildPlayerHTML(track) : ""}
           <div class="actions">
+            <button class="btn btn-listen ${isPlaying ? "playing" : ""}">${isPlaying ? "■ Stop" : "▶ Listen"}</button>
             <button class="btn btn-copy">Copy Name</button>
             <a class="btn btn-open" target="_blank" rel="noopener noreferrer">Open Gate &nearr;</a>
             <button class="btn btn-done">${isDone ? "Restore" : "✓ Done"}</button>
@@ -541,6 +658,10 @@
         `;
 
         card.querySelector(".track-title").textContent = track.title;
+
+        const listenBtn = card.querySelector(".btn-listen");
+        listenBtn.onclick = () => togglePlay(key);
+
         const copyBtn = card.querySelector(".btn-copy");
         copyBtn.onclick = () => copyText(track.title, copyBtn);
 
