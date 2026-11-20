@@ -1,0 +1,35 @@
+name: Scan New Tracks
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install tools
+        run: pip install requests beautifulsoup4
+
+      - name: Run track scout
+        run: python scraper.py
+
+      - name: Save updated tracks
+        run: |
+          git config user.name "Crate Radar Bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add tracks.json
+          git diff --staged --quiet || git commit -m "Update tracks"
+          git push
