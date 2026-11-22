@@ -1,7 +1,46 @@
 {
-  "last_updated": "Nov 22, 02:03 PM PHT",
-  "total_tracks": 52,
+  "last_updated": "Nov 23, 03:17 AM PHT",
+  "total_tracks": 55,
   "tracks": [
+    {
+      "id": "doilflip_1795375064",
+      "title": "B.O.B. (DOIL FLIP)",
+      "url": "https://droploud.com/track/a450bb84-bf58-48b0-ae4b-4273e5ca7d35",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 23, 03:17 AM PHT",
+      "found_iso": "2026-11-23T03:17:44.773756+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/officialdoil/doil-is-bob"
+    },
+    {
+      "id": "excisionkillerslaceslord_1795375064",
+      "title": "Excision & Space Laces - True Killers (SOUL VALIENT & LORDBOT Remix)",
+      "url": "https://droploud.com/track/fee87aac-33d2-443f-a4e8-a68938b263d6",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 23, 03:17 AM PHT",
+      "found_iso": "2026-11-23T03:17:44.773756+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/soulvalient/excision-space-laces-true"
+    },
+    {
+      "id": "beatdelaitremix_1795375064",
+      "title": "Beat it - dela remix",
+      "url": "https://droploud.com/track/f669c271-60f3-4683-be50-c370109bbd0b",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 23, 03:17 AM PHT",
+      "found_iso": "2026-11-23T03:17:44.773756+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/delachr/beat-it-dela-remix"
+    },
     {
       "id": "recoil_1795259366",
       "title": "Recoil",
