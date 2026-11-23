@@ -1,5 +1,5 @@
 {
-  "last_updated": "Nov 23, 03:17 AM PHT",
+  "last_updated": "Nov 23, 02:56 PM PHT",
   "total_tracks": 55,
   "tracks": [
     {
@@ -13,7 +13,8 @@
       "found_at": "Nov 23, 03:17 AM PHT",
       "found_iso": "2026-11-23T03:17:44.773756+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/officialdoil/doil-is-bob"
+      "preview_url": "https://soundcloud.com/officialdoil/doil-is-bob",
+      "preview_checked": true
     },
     {
       "id": "excisionkillerslaceslord_1795375064",
@@ -26,7 +27,8 @@
       "found_at": "Nov 23, 03:17 AM PHT",
       "found_iso": "2026-11-23T03:17:44.773756+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/soulvalient/excision-space-laces-true"
+      "preview_url": "https://soundcloud.com/soulvalient/excision-space-laces-true",
+      "preview_checked": true
     },
     {
       "id": "beatdelaitremix_1795375064",
@@ -39,7 +41,8 @@
       "found_at": "Nov 23, 03:17 AM PHT",
       "found_iso": "2026-11-23T03:17:44.773756+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/delachr/beat-it-dela-remix"
+      "preview_url": "https://soundcloud.com/delachr/beat-it-dela-remix",
+      "preview_checked": true
     },
     {
       "id": "recoil_1795259366",
