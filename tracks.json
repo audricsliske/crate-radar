@@ -1,7 +1,33 @@
 {
-  "last_updated": "Nov 24, 07:40 AM PHT",
-  "total_tracks": 57,
+  "last_updated": "Nov 24, 05:22 PM PHT",
+  "total_tracks": 59,
   "tracks": [
+    {
+      "id": "022026djopenformatpackte_1795512159",
+      "title": "DJ TERIX OPENFORMAT PACK VOL.02 2026 *FREE DOWNLOAD*",
+      "url": "https://droploud.com/track/1e14a278-8be1-4895-9c0c-e6cfb331143f",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": false,
+      "is_duplicate": false,
+      "found_at": "Nov 24, 05:22 PM PHT",
+      "found_iso": "2026-11-24T17:22:39.166538+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/mike-terix/dj-terix-openformat-pack-vol-1"
+    },
+    {
+      "id": "afrocntrlladylstmodjorem_1795512159",
+      "title": "Modjo - Lady (LST CNTRL Afro Remix) [FREE DOWNLOAD]",
+      "url": "https://droploud.com/track/9a59a8ac-68b4-4749-95ec-4de7774814ba",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 24, 05:22 PM PHT",
+      "found_iso": "2026-11-24T17:22:39.166538+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/lstcntrlofficial/modjolayremix"
+    },
     {
       "id": "doctorflipkozmoztetris_1795477213",
       "title": "Doctor P - Tetris (Kozmoz Flip)",
@@ -13,7 +39,8 @@
       "found_at": "Nov 24, 07:40 AM PHT",
       "found_iso": "2026-11-24T07:40:13.345019+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/kozmoz-remixes/doctor-p-tetris-kozmoz-flip"
+      "preview_url": "https://soundcloud.com/kozmoz-remixes/doctor-p-tetris-kozmoz-flip",
+      "preview_checked": true
     },
     {
       "id": "flippinharunhotelrobstee_1795477213",
@@ -26,7 +53,8 @@
       "found_at": "Nov 24, 07:40 AM PHT",
       "found_iso": "2026-11-24T07:40:13.345019+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/trizhaharun/hotel-room-flippin-robstee-trizhaharun"
+      "preview_url": "https://soundcloud.com/trizhaharun/hotel-room-flippin-robstee-trizhaharun",
+      "preview_checked": true
     },
     {
       "id": "doilflip_1795375064",
