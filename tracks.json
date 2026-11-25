@@ -1,7 +1,33 @@
 {
-  "last_updated": "Nov 25, 03:54 PM PHT",
-  "total_tracks": 60,
+  "last_updated": "Nov 26, 05:27 AM PHT",
+  "total_tracks": 62,
   "tracks": [
+    {
+      "id": "fixbeatzjerseyjuepakremi_1795642055",
+      "title": "i Tim Skibidi - JUEPAK [ Shino Fixbeatz Jersey Club Remix ]",
+      "url": "https://droploud.com/track/8b251ad0-008f-4fa4-b8d9-c4d465195a83",
+      "platform": "Droploud",
+      "genre": "Trap",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 26, 05:27 AM PHT",
+      "found_iso": "2026-11-26T05:27:35.170098+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/mike-shinoda-3/i-tim-skibidi-juepak-shino"
+    },
+    {
+      "id": "afrokeitamadanmichaelrem_1795642055",
+      "title": "Madan (Michael K afro remix) - Salif Keita",
+      "url": "https://droploud.com/track/d479a08c-41ca-4d3d-9f9e-e7093681bca2",
+      "platform": "Droploud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 26, 05:27 AM PHT",
+      "found_iso": "2026-11-26T05:27:35.170098+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/michaelkdj/madan-michael-k-afro-remix"
+    },
     {
       "id": "carsenflowergtahurricane_1795558322",
       "title": "Justice - Flower In A Hurricane(CARSEN Remix) [GTA VI]",
