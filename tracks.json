@@ -1,7 +1,33 @@
 {
-  "last_updated": "Nov 27, 03:45 PM PHT",
-  "total_tracks": 75,
+  "last_updated": "Nov 28, 04:57 AM PHT",
+  "total_tracks": 77,
   "tracks": [
+    {
+      "id": "creatorepticgunpointhard_1795813025",
+      "title": "EPTIC x TYLER THE CREATOR - HARD KNOCK x YONKERS (GUNPOINT RELOAD)",
+      "url": "https://droploud.com/track/49fc6a8d-7385-4f59-8490-1726c5a080c6",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": false,
+      "is_duplicate": false,
+      "found_at": "Nov 28, 04:57 AM PHT",
+      "found_iso": "2026-11-28T04:57:05.739466+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/gunpointmusic/eptic-x-tyler-the-creator-1"
+    },
+    {
+      "id": "cozyflowdankevlondonremi_1795813025",
+      "title": "FLOWDAN - WELCOME TO LONDON (COZY KEV REMIX)",
+      "url": "https://droploud.com/track/0588ccf4-38d5-4b03-8288-f3b37a1bbcfc",
+      "platform": "Droploud",
+      "genre": "Dubstep",
+      "is_edit": true,
+      "is_duplicate": false,
+      "found_at": "Nov 28, 04:57 AM PHT",
+      "found_iso": "2026-11-28T04:57:05.739466+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/cozykevvv/welcome-to-london-cozy-kev"
+    },
     {
       "id": "davireeditjerseykidmanni_1795727725",
       "title": "Nicole Kidman (Davire Jersey Club Edit)",
