@@ -1,7 +1,37 @@
 {
-  "last_updated": "Nov 28, 01:56 PM PHT",
-  "total_tracks": 249,
+  "last_updated": "Nov 28, 03:14 PM PHT",
+  "total_tracks": 251,
   "tracks": [
+    {
+      "id": "afroaviciihouseremixwith_1795850049",
+      "title": "Without You - Avicii (AFRO HOUSE REMIX) [Free Download]",
+      "url": "https://soundcloud.com/bennetdreyer/withoutyou",
+      "platform": "SoundCloud",
+      "genre": "Afro House",
+      "is_edit": true,
+      "is_duplicate": false,
+      "downloadable": true,
+      "found_at": "Nov 28, 03:14 PM PHT",
+      "found_iso": "2026-11-28T15:14:09.206422+08:00",
+      "preview_type": "soundcloud",
+      "preview_url": "https://soundcloud.com/bennetdreyer/withoutyou",
+      "preview_checked": true
+    },
+    {
+      "id": "crystallineugliifroot_1795850049",
+      "title": "Ugliifroot - Crystalline",
+      "url": "https://audius.co/This/crystalline",
+      "platform": "Audius",
+      "genre": "Dubstep",
+      "is_edit": false,
+      "is_duplicate": false,
+      "downloadable": false,
+      "found_at": "Nov 28, 03:14 PM PHT",
+      "found_iso": "2026-11-28T15:14:09.206422+08:00",
+      "preview_type": "audio",
+      "preview_url": "https://api.audius.co/v1/tracks/Wb80r3K/stream?app_name=CrateRadar",
+      "preview_checked": true
+    },
     {
       "id": "editmedaasenuevayolsexyb_1795845403",
       "title": "NUEVAYOL X SEXYBACK (Medaase edit)",
@@ -14,7 +44,8 @@
       "found_at": "Nov 28, 01:56 PM PHT",
       "found_iso": "2026-11-28T13:56:43.542930+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/medaase/nuevayol-x-sexyback-medaase-1"
+      "preview_url": "https://soundcloud.com/medaase/nuevayol-x-sexyback-medaase-1",
+      "preview_checked": true
     },
     {
       "id": "3friendsjostinmashuppack_1795845403",
@@ -28,7 +59,8 @@
       "found_at": "Nov 28, 01:56 PM PHT",
       "found_iso": "2026-11-28T13:56:43.542930+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/jostind-mx/jostin-d-sound-vibes-of-1"
+      "preview_url": "https://soundcloud.com/jostind-mx/jostin-d-sound-vibes-of-1",
+      "preview_checked": true
     },
     {
       "id": "dembowfullhepaypricewann_1795845403",
@@ -42,7 +74,8 @@
       "found_at": "Nov 28, 01:56 PM PHT",
       "found_iso": "2026-11-28T13:56:43.542930+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/refilledmusic/refilled-he-wanna-pay-full-price"
+      "preview_url": "https://soundcloud.com/refilledmusic/refilled-he-wanna-pay-full-price",
+      "preview_checked": true
     },
     {
       "id": "150chiquillocomercialelm_1795845403",
@@ -56,7 +89,8 @@
       "found_at": "Nov 28, 01:56 PM PHT",
       "found_iso": "2026-11-28T13:56:43.542930+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/kazudj/el-chiquillo-mashup-pack-vol-1"
+      "preview_url": "https://soundcloud.com/kazudj/el-chiquillo-mashup-pack-vol-1",
+      "preview_checked": true
     },
     {
       "id": "denooeimcomonsterremix_1795845403",
@@ -70,7 +104,8 @@
       "found_at": "Nov 28, 01:56 PM PHT",
       "found_iso": "2026-11-28T13:56:43.542930+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/eimco/the-monster-eimco-denoo"
+      "preview_url": "https://soundcloud.com/eimco/the-monster-eimco-denoo",
+      "preview_checked": true
     },
     {
       "id": "10minbrokkocopyrightdeno_1795845403",
@@ -84,7 +119,8 @@
       "found_at": "Nov 28, 01:56 PM PHT",
       "found_iso": "2026-11-28T13:56:43.542930+08:00",
       "preview_type": "soundcloud",
-      "preview_url": "https://soundcloud.com/tristandenoo/one-night-stand-x-brokko-maken"
+      "preview_url": "https://soundcloud.com/tristandenoo/one-night-stand-x-brokko-maken",
+      "preview_checked": true
     },
     {
       "id": "dancedancehalldrakeedito_1795845403",
