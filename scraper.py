@@ -4,7 +4,7 @@ import re
 import time
 import unicodedata
 from datetime import datetime, timezone, timedelta
-from urllib.parse import urljoin, urlparse, unquote
+from urllib.parse import urljoin, urlparse, unquote, quote_plus
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,18 +20,22 @@ HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
 }
 
-SOURCES = [
+HTML_SOURCES = [
     # Hypeddit Top Downloads Charts
+    {"platform": "Hypeddit", "genre": "Dancehall", "url": "https://hypeddit.com/charts/downloads/genre/dancehall", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Dubstep", "url": "https://hypeddit.com/charts/downloads/genre/dubstep", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Trap", "url": "https://hypeddit.com/charts/downloads/genre/trap", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Afro House", "url": "https://hypeddit.com/charts/downloads/genre/afro-house", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Bass", "url": "https://hypeddit.com/charts/downloads/genre/bass", "strict_filter": True},
-    # Hypeddit New Releases (Dig Deeper into fresh uploads)
+    # Hypeddit New Releases & Streaming Charts
+    {"platform": "Hypeddit", "genre": "Dancehall", "url": "https://hypeddit.com/newreleases/genre/dancehall", "strict_filter": False},
+    {"platform": "Hypeddit", "genre": "Dancehall", "url": "https://hypeddit.com/charts/streams/genre/dancehall", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Dubstep", "url": "https://hypeddit.com/newreleases/genre/dubstep", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Trap", "url": "https://hypeddit.com/newreleases/genre/trap", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "Afro House", "url": "https://hypeddit.com/newreleases/genre/afro-house", "strict_filter": False},
     {"platform": "Hypeddit", "genre": "New Releases", "url": "https://hypeddit.com/newreleases/genre/all", "strict_filter": True},
-    # Droploud Genre & Deeper Pages
+    # Droploud Genre & Deeper Pages (Latin/Reggaeton holds Dancehall/Dembow/Moombahton on Droploud)
+    {"platform": "Droploud", "genre": "Dancehall", "url": "https://droploud.com/genre/latin-reggaeton", "strict_filter": True},
     {"platform": "Droploud", "genre": "Dubstep", "url": "https://droploud.com/genre/dubstep", "strict_filter": False},
     {"platform": "Droploud", "genre": "Dubstep", "url": "https://droploud.com/genre/dubstep?page=2", "strict_filter": False},
     {"platform": "Droploud", "genre": "Trap", "url": "https://droploud.com/genre/trap", "strict_filter": False},
@@ -41,8 +45,36 @@ SOURCES = [
     {"platform": "Droploud", "genre": "Discover", "url": "https://droploud.com/discover", "strict_filter": True},
 ]
 
-EDIT_KEYWORDS = re.compile(r"\b(flip|edit|bootleg|vip|remix|rework|mashup|refix)\b", re.I)
-GENRE_KEYWORDS = re.compile(r"\b(dubstep|riddim|trap|afro\s*house|afrotech|afro-tech|bass)\b", re.I)
+SOUNDCLOUD_SEARCH_QUERIES = [
+    {"genre": "Dancehall", "query": "dancehall free download"},
+    {"genre": "Dancehall", "query": "dancehall flip bootleg free download"},
+    {"genre": "Dubstep", "query": "dubstep flip free download"},
+    {"genre": "Trap", "query": "trap edit free download"},
+    {"genre": "Afro House", "query": "afro house remix free download"},
+]
+
+AUDIUS_FEEDS = [
+    {"genre": "Dancehall", "mode": "trending", "param": "Dancehall"},
+    {"genre": "Dancehall", "mode": "search", "param": "dancehall flip remix"},
+    {"genre": "Dubstep", "mode": "trending", "param": "Dubstep"},
+    {"genre": "Trap", "mode": "trending", "param": "Trap"},
+    {"genre": "Afro House", "mode": "search", "param": "afro house"},
+]
+
+HEARTHIS_CATEGORIES = [
+    {"genre": "Dancehall", "slug": "dancehall"},
+    {"genre": "Dubstep", "slug": "dubstep"},
+    {"genre": "Trap", "slug": "trap"},
+    {"genre": "Afro House", "slug": "afro-house"},
+]
+
+EDIT_KEYWORDS = re.compile(r"\b(flip|edit|bootleg|vip|remix|rework|mashup|refix|redrum)\b", re.I)
+GENRE_KEYWORDS = re.compile(
+    r"\b(dancehall|riddim|bashment|moombahton|dembow|dubstep|trap|afro\s*house|afrotech|afro-tech|bass)\b",
+    re.I
+)
+
+MAX_TRACK_SECONDS = 720  # Skip 15-90 min DJ mixtapes; keep singles/edits under 12 min
 
 AUDIO_EXT_RE = re.compile(r"\.(mp3|wav|flac|aiff|aif|m4a|aac|ogg|alac|wma)$", re.I)
 LEADING_META_RE = re.compile(r"^(?:\d{1,3}(?:\s*bpm)?|\d{1,2}[abm])[\s._-]+", re.I)
@@ -52,21 +84,22 @@ STOP_WORDS = {
     "short", "club", "instrumental", "acapella", "free", "download", "dl",
     "320", "320kbps", "kbps", "master", "mastered", "hq", "explicit",
     "feat", "ft", "featuring", "vs", "and", "the", "a", "an", "of", "in", "on",
-    "out", "now", "hypeddit", "droploud", "soundcloud", "sc", "bpm", "official",
-    "audio", "video", "premiere", "release", "version", "ver"
+    "out", "now", "hypeddit", "droploud", "soundcloud", "sc", "audius", "hearthis",
+    "bpm", "official", "audio", "video", "premiere", "release", "version", "ver"
 }
 
-REMIX_MODIFIERS = {"flip", "bootleg", "vip", "remix", "rework", "mashup", "refix"}
+REMIX_MODIFIERS = {"flip", "bootleg", "vip", "remix", "rework", "mashup", "refix", "redrum"}
 
 SC_RESERVED_USERS = {
     "login", "signup", "connect", "oauth", "you", "settings", "stream",
     "search", "popular", "people", "stations", "pro", "go", "imprint",
     "docs", "terms-of-use", "privacy", "cookies", "hypeddit", "droploud",
-    "pages", "upload", "charts", "discover", "jobs", "press", "mobile"
+    "pages", "upload", "charts", "discover", "jobs", "press", "mobile",
+    "downloads", "terms-of-service"
 }
 SC_RESERVED_TRACKS = {
     "sets", "tracks", "reposts", "likes", "following", "followers",
-    "albums", "popular-tracks", "spotlight", "comments"
+    "albums", "popular-tracks", "spotlight", "comments", "recommended"
 }
 
 
@@ -77,6 +110,18 @@ def clean_text(text: str) -> str:
 def fold_ascii(text: str) -> str:
     nfkd = unicodedata.normalize("NFKD", text or "")
     return nfkd.encode("ascii", "ignore").decode("ascii")
+
+
+def detect_genre(title: str, fallback_genre: str) -> str:
+    if re.search(r"\b(dancehall|bashment|moombahton|dembow)\b", title, re.I):
+        return "Dancehall"
+    if re.search(r"\b(dubstep|riddim)\b", title, re.I):
+        return "Dubstep"
+    if re.search(r"\btrap\b", title, re.I):
+        return "Trap"
+    if re.search(r"\b(afro\s*house|afrotech|afro-tech)\b", title, re.I):
+        return "Afro House"
+    return fallback_genre
 
 
 def tokenize_title(text: str) -> dict:
@@ -288,6 +333,7 @@ def parse_hypeddit(soup: BeautifulSoup, base_url: str, default_genre: str) -> li
             "url": full_url,
             "platform": "Hypeddit",
             "genre": default_genre,
+            "downloadable": True,
         })
 
     return found
@@ -309,7 +355,7 @@ def parse_droploud(soup: BeautifulSoup, base_url: str, default_genre: str) -> li
         raw_lines = [clean_text(x) for x in container.stripped_strings]
         noise = {
             "free dl", "free download", "no change", "dubstep", "trap",
-            "afro house", "house", "tech house", "download"
+            "afro house", "house", "tech house", "download", "latin / reggaeton"
         }
         lines = [
             line for line in raw_lines
@@ -336,7 +382,204 @@ def parse_droploud(soup: BeautifulSoup, base_url: str, default_genre: str) -> li
             "url": full_url,
             "platform": "Droploud",
             "genre": default_genre,
+            "downloadable": True,
         })
+
+    return found
+
+
+def scrape_soundcloud_search(query: str, default_genre: str) -> list:
+    found = []
+    search_url = f"https://soundcloud.com/search/sounds?q={quote_plus(query)}"
+    print(f"Scanning SoundCloud ({default_genre}): {search_url}")
+    try:
+        resp = requests.get(search_url, headers=HEADERS, timeout=18)
+        if resp.status_code != 200:
+            print(f"  SoundCloud skipped (HTTP {resp.status_code})")
+            return found
+
+        html = resp.text
+        soup = BeautifulSoup(html, "html.parser")
+        seen_local = set()
+
+        # 1. Extract from semantic noscript / SSR links
+        for a in soup.find_all("a", href=True):
+            href = a["href"].strip()
+            full_url = urljoin("https://soundcloud.com", href).split("?")[0]
+            if not is_valid_soundcloud_track(full_url) or full_url in seen_local:
+                continue
+            title_text = clean_text(a.get_text())
+            if not title_text or len(title_text) < 3 or len(title_text) > 140:
+                continue
+            seen_local.add(full_url)
+            found.append({
+                "title": title_text,
+                "url": full_url,
+                "platform": "SoundCloud",
+                "genre": default_genre,
+                "preview_type": "soundcloud",
+                "preview_url": full_url,
+                "preview_checked": True,
+                "downloadable": True,
+            })
+
+        # 2. Extract from SoundCloud hydration payload if present
+        hyd_match = re.search(r"window\.__sc_hydration\s*=\s*(\[.*?\]);</script>", html, re.S)
+        if hyd_match:
+            try:
+                hyd_data = json.loads(hyd_match.group(1))
+                for block in hyd_data:
+                    data = block.get("data")
+                    collection = data.get("collection", []) if isinstance(data, dict) else []
+                    for item in collection:
+                        if not isinstance(item, dict):
+                            continue
+                        permalink = item.get("permalink_url", "").split("?")[0]
+                        title_text = clean_text(item.get("title", ""))
+                        duration_ms = item.get("duration") or 0
+                        if duration_ms and (duration_ms / 1000.0) > MAX_TRACK_SECONDS:
+                            continue
+                        if not is_valid_soundcloud_track(permalink) or permalink in seen_local:
+                            continue
+                        if not title_text or len(title_text) < 3:
+                            continue
+                        artist = clean_text((item.get("user") or {}).get("username", ""))
+                        display_title = (
+                            f"{artist} - {title_text}"
+                            if artist and artist.lower() not in title_text.lower()
+                            else title_text
+                        )
+                        seen_local.add(permalink)
+                        found.append({
+                            "title": display_title[:140],
+                            "url": permalink,
+                            "platform": "SoundCloud",
+                            "genre": default_genre,
+                            "preview_type": "soundcloud",
+                            "preview_url": permalink,
+                            "preview_checked": True,
+                            "downloadable": bool(item.get("downloadable") or item.get("purchase_url")),
+                        })
+            except Exception:
+                pass
+
+        print(f"  Found {len(found)} SoundCloud candidates")
+    except Exception as exc:
+        print(f"  Error scanning SoundCloud ({query}): {exc}")
+
+    return found
+
+
+def scrape_audius_feed(feed: dict) -> list:
+    found = []
+    genre = feed["genre"]
+    mode = feed["mode"]
+    param = feed["param"]
+
+    if mode == "trending":
+        api_url = f"https://api.audius.co/v1/tracks/trending?genre={quote_plus(param)}&limit=25&app_name=CrateRadar"
+    else:
+        api_url = f"https://api.audius.co/v1/tracks/search?query={quote_plus(param)}&limit=25&app_name=CrateRadar"
+
+    print(f"Scanning Audius ({genre} - {mode}): {api_url}")
+    try:
+        resp = requests.get(api_url, headers=HEADERS, timeout=18)
+        if resp.status_code != 200:
+            print(f"  Audius skipped (HTTP {resp.status_code})")
+            return found
+
+        payload = resp.json()
+        tracks = payload.get("data") or []
+        for tr in tracks:
+            if not isinstance(tr, dict):
+                continue
+            track_id = tr.get("id")
+            title_text = clean_text(tr.get("title", ""))
+            duration = tr.get("duration") or 0
+            if not track_id or not title_text or duration > MAX_TRACK_SECONDS:
+                continue
+
+            artist = clean_text((tr.get("user") or {}).get("name", ""))
+            display_title = (
+                f"{artist} - {title_text}"
+                if artist and artist.lower() not in title_text.lower()
+                else title_text
+            )
+            permalink = tr.get("permalink") or ""
+            web_url = f"https://audius.co{permalink}" if permalink.startswith("/") else f"https://audius.co/tracks/{track_id}"
+            stream_url = f"https://api.audius.co/v1/tracks/{track_id}/stream?app_name=CrateRadar"
+
+            found.append({
+                "title": display_title[:140],
+                "url": web_url,
+                "platform": "Audius",
+                "genre": genre,
+                "preview_type": "audio",
+                "preview_url": stream_url,
+                "preview_checked": True,
+                "downloadable": bool(tr.get("is_downloadable")),
+            })
+        print(f"  Found {len(found)} Audius candidates")
+    except Exception as exc:
+        print(f"  Error scanning Audius ({genre}): {exc}")
+
+    return found
+
+
+def scrape_hearthis_category(cat: dict) -> list:
+    found = []
+    genre = cat["genre"]
+    slug = cat["slug"]
+    api_url = f"https://api-v2.hearthis.at/categories/{slug}/?page=1&count=25"
+    print(f"Scanning Hearthis.at ({genre}): {api_url}")
+    try:
+        resp = requests.get(api_url, headers=HEADERS, timeout=18)
+        if resp.status_code != 200:
+            print(f"  Hearthis skipped (HTTP {resp.status_code})")
+            return found
+
+        items = resp.json()
+        if not isinstance(items, list):
+            return found
+
+        for tr in items:
+            if not isinstance(tr, dict):
+                continue
+            title_text = clean_text(tr.get("title", ""))
+            permalink_url = (tr.get("permalink_url") or "").split("?")[0]
+            stream_url = tr.get("stream_url") or ""
+            try:
+                duration_sec = int(float(tr.get("duration") or 0))
+            except Exception:
+                duration_sec = 0
+
+            if not title_text or not permalink_url:
+                continue
+            if duration_sec > MAX_TRACK_SECONDS:
+                continue
+
+            artist = clean_text((tr.get("user") or {}).get("username", ""))
+            display_title = (
+                f"{artist} - {title_text}"
+                if artist and artist.lower() not in title_text.lower()
+                else title_text
+            )
+            entry = {
+                "title": display_title[:140],
+                "url": permalink_url,
+                "platform": "Hearthis",
+                "genre": genre,
+                "preview_checked": True,
+                "downloadable": str(tr.get("downloadable", "0")) == "1",
+            }
+            if stream_url.startswith("http"):
+                entry["preview_type"] = "audio"
+                entry["preview_url"] = stream_url
+
+            found.append(entry)
+        print(f"  Found {len(found)} Hearthis candidates")
+    except Exception as exc:
+        print(f"  Error scanning Hearthis ({genre}): {exc}")
 
     return found
 
@@ -358,9 +601,58 @@ def main():
 
     new_tracks = []
     preview_lookups = 0
-    MAX_PREVIEW_LOOKUPS = 60
+    MAX_PREVIEW_LOOKUPS = 65
 
-    for src in SOURCES:
+    def register_candidates(candidates: list, strict: bool = False):
+        nonlocal preview_lookups
+        for item in candidates:
+            title = item["title"]
+            t_url = item["url"].rstrip("/")
+            t_key = normalize_key(title)
+
+            if not t_key or t_url in seen_urls or t_key in seen_keys:
+                continue
+
+            is_edit = bool(EDIT_KEYWORDS.search(title))
+            matches_genre_kw = bool(GENRE_KEYWORDS.search(title))
+
+            if strict and not (is_edit or matches_genre_kw):
+                continue
+
+            detected_genre = detect_genre(title, item["genre"])
+
+            seen_urls.add(t_url)
+            seen_keys.add(t_key)
+
+            preview = {}
+            if item.get("preview_url"):
+                preview = {
+                    "preview_type": item.get("preview_type", "audio"),
+                    "preview_url": item["preview_url"],
+                    "preview_checked": True,
+                }
+            elif preview_lookups < MAX_PREVIEW_LOOKUPS:
+                preview = fetch_preview_info(t_url)
+                preview_lookups += 1
+                time.sleep(0.3)
+
+            track_entry = {
+                "id": t_key[:24] + "_" + str(int(now_pht.timestamp())),
+                "title": title,
+                "url": t_url,
+                "platform": item["platform"],
+                "genre": detected_genre,
+                "is_edit": is_edit,
+                "is_duplicate": is_owned_track(title, owned_profiles),
+                "downloadable": bool(item.get("downloadable", True)),
+                "found_at": timestamp_label,
+                "found_iso": iso_now,
+            }
+            track_entry.update(preview)
+            new_tracks.append(track_entry)
+
+    # 1. Hypeddit & Droploud
+    for src in HTML_SOURCES:
         url = src["url"]
         platform = src["platform"]
         genre = src["genre"]
@@ -379,57 +671,31 @@ def main():
                 else parse_droploud(soup, url, genre)
             )
             print(f"  Found {len(items)} raw candidates")
-
-            for item in items:
-                title = item["title"]
-                t_url = item["url"].rstrip("/")
-                t_key = normalize_key(title)
-
-                if not t_key or t_url in seen_urls or t_key in seen_keys:
-                    continue
-
-                is_edit = bool(EDIT_KEYWORDS.search(title))
-                matches_genre_kw = bool(GENRE_KEYWORDS.search(title))
-
-                if strict and not (is_edit or matches_genre_kw):
-                    continue
-
-                detected_genre = genre
-                if re.search(r"\b(dubstep|riddim)\b", title, re.I):
-                    detected_genre = "Dubstep"
-                elif re.search(r"\btrap\b", title, re.I):
-                    detected_genre = "Trap"
-                elif re.search(r"\b(afro\s*house|afrotech|afro-tech)\b", title, re.I):
-                    detected_genre = "Afro House"
-
-                seen_urls.add(t_url)
-                seen_keys.add(t_key)
-
-                preview = {}
-                if preview_lookups < MAX_PREVIEW_LOOKUPS:
-                    preview = fetch_preview_info(t_url)
-                    preview_lookups += 1
-                    time.sleep(0.35)
-
-                track_entry = {
-                    "id": t_key[:24] + "_" + str(int(now_pht.timestamp())),
-                    "title": title,
-                    "url": t_url,
-                    "platform": platform,
-                    "genre": detected_genre,
-                    "is_edit": is_edit,
-                    "is_duplicate": is_owned_track(title, owned_profiles),
-                    "found_at": timestamp_label,
-                    "found_iso": iso_now,
-                }
-                track_entry.update(preview)
-                new_tracks.append(track_entry)
-
+            register_candidates(items, strict=strict)
         except Exception as exc:
             print(f"  Error scanning {url}: {exc}")
 
-        time.sleep(1.0)
+        time.sleep(0.8)
 
+    # 2. SoundCloud Free Downloads & Edits
+    for sc in SOUNDCLOUD_SEARCH_QUERIES:
+        items = scrape_soundcloud_search(sc["query"], sc["genre"])
+        register_candidates(items, strict=False)
+        time.sleep(0.8)
+
+    # 3. Audius Free Streaming & Downloads
+    for af in AUDIUS_FEEDS:
+        items = scrape_audius_feed(af)
+        register_candidates(items, strict=False)
+        time.sleep(0.5)
+
+    # 4. Hearthis.at Free DJ Tracks & Edits
+    for hc in HEARTHIS_CATEGORIES:
+        items = scrape_hearthis_category(hc)
+        register_candidates(items, strict=False)
+        time.sleep(0.5)
+
+    # Backfill missing previews on older tracks
     for t in existing_tracks:
         if preview_lookups >= MAX_PREVIEW_LOOKUPS:
             break
@@ -438,11 +704,11 @@ def main():
             t["preview_checked"] = True
             t.update(preview)
             preview_lookups += 1
-            time.sleep(0.35)
+            time.sleep(0.3)
 
     print(f"Total brand-new tracks added: {len(new_tracks)}")
 
-    combined = (new_tracks + existing_tracks)[:800]
+    combined = (new_tracks + existing_tracks)[:1000]
 
     output = {
         "last_updated": timestamp_label,

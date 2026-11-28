@@ -20,6 +20,9 @@
       --lime: #a3ff12;
       --purple: #b388ff;
       --amber: #ffab00;
+      --sc-orange: #ff6e40;
+      --audius-pink: #e040fb;
+      --hearthis-teal: #1de9b6;
     }
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body {
@@ -343,6 +346,9 @@
     }
     .badge-hypeddit { background: rgba(0, 229, 255, 0.14); color: var(--cyan); }
     .badge-droploud { background: rgba(179, 136, 255, 0.16); color: var(--purple); }
+    .badge-soundcloud { background: rgba(255, 110, 64, 0.16); color: var(--sc-orange); }
+    .badge-audius { background: rgba(224, 64, 251, 0.16); color: var(--audius-pink); }
+    .badge-hearthis { background: rgba(29, 233, 182, 0.16); color: var(--hearthis-teal); }
     .badge-genre { background: rgba(255, 255, 255, 0.07); color: var(--text); }
     .badge-edit { background: rgba(163, 255, 18, 0.15); color: var(--lime); }
     .badge-duplicate {
@@ -488,19 +494,23 @@
 
     <div class="controls">
       <div class="search-row">
-        <input type="search" id="searchInput" placeholder="Search artist, flip, edit, keyword..." />
+        <input type="search" id="searchInput" placeholder="Search artist, dancehall, flip, edit..." />
         <button class="toggle-btn" id="toggleDupesBtn">Hide Dupes (0)</button>
         <button class="toggle-btn" id="toggleHiddenBtn">Done (0)</button>
       </div>
       <div class="pills" id="filterPills">
         <button class="pill active" data-filter="ALL">All</button>
+        <button class="pill" data-filter="Dancehall">Dancehall</button>
         <button class="pill" data-filter="Dubstep">Dubstep</button>
         <button class="pill" data-filter="Trap">Trap</button>
         <button class="pill" data-filter="Afro House">Afro House</button>
         <button class="pill" data-filter="EDITS">Flips &amp; Edits</button>
         <button class="pill" data-filter="DUPLICATES">Duplicates</button>
+        <button class="pill" data-filter="SoundCloud">SoundCloud</button>
         <button class="pill" data-filter="Hypeddit">Hypeddit</button>
         <button class="pill" data-filter="Droploud">Droploud</button>
+        <button class="pill" data-filter="Audius">Audius</button>
+        <button class="pill" data-filter="Hearthis">Hearthis</button>
       </div>
     </div>
   </header>
@@ -544,6 +554,9 @@
     const REPO_NAME = "crate-radar";
     const WORKFLOW_FILE = "scan.yml";
 
+    const GENRE_FILTERS = new Set(["Dancehall", "Dubstep", "Trap", "Afro House"]);
+    const PLATFORM_FILTERS = new Set(["SoundCloud", "Hypeddit", "Droploud", "Audius", "Hearthis"]);
+
     const AUDIO_EXT_RE = /\.(mp3|wav|flac|aiff|aif|m4a|aac|ogg|alac|wma)$/i;
     const LEADING_META_RE = /^(?:\d{1,3}(?:\s*bpm)?|\d{1,2}[abm])[\s._-]+/i;
 
@@ -552,12 +565,12 @@
       "short", "club", "instrumental", "acapella", "free", "download", "dl",
       "320", "320kbps", "kbps", "master", "mastered", "hq", "explicit",
       "feat", "ft", "featuring", "vs", "and", "the", "a", "an", "of", "in", "on",
-      "out", "now", "hypeddit", "droploud", "soundcloud", "sc", "bpm", "official",
-      "audio", "video", "premiere", "release", "version", "ver"
+      "out", "now", "hypeddit", "droploud", "soundcloud", "sc", "audius", "hearthis",
+      "bpm", "official", "audio", "video", "premiere", "release", "version", "ver"
     ]);
 
     const REMIX_MODIFIERS = new Set([
-      "flip", "bootleg", "vip", "remix", "rework", "mashup", "refix"
+      "flip", "bootleg", "vip", "remix", "rework", "mashup", "refix", "redrum"
     ]);
 
     let allTracks = [];
@@ -706,6 +719,15 @@
       render();
     }
 
+    function getPlatformBadgeClass(platform) {
+      const p = (platform || "").toLowerCase();
+      if (p === "droploud") return "badge-droploud";
+      if (p === "soundcloud") return "badge-soundcloud";
+      if (p === "audius") return "badge-audius";
+      if (p === "hearthis") return "badge-hearthis";
+      return "badge-hypeddit";
+    }
+
     function buildPlayerHTML(track) {
       const encodedTitle = encodeURIComponent(track.title);
       const scSearch = `https://soundcloud.com/search/sounds?q=${encodedTitle}`;
@@ -804,7 +826,7 @@
       const statusEl = document.getElementById("digStatusText");
       const digBtn = document.getElementById("digMoreBtn");
       digBtn.classList.add("spinning");
-      statusEl.innerHTML = "Triggering live Hypeddit &amp; Droploud scrape via GitHub Actions...";
+      statusEl.innerHTML = "Triggering live scrape across Hypeddit, Droploud, SoundCloud, Audius &amp; Hearthis...";
 
       try {
         const res = await fetch(
@@ -833,7 +855,7 @@
           throw new Error("HTTP " + res.status);
         }
 
-        statusEl.innerHTML = "<strong>Scan started!</strong> Digging Hypeddit &amp; Droploud (~35s) — will auto-refresh when done...";
+        statusEl.innerHTML = "<strong>Scan started!</strong> Digging Dancehall, Dubstep, Trap &amp; Afro House (~45s) — auto-refreshing when done...";
         let attempts = 0;
         if (pollTimer) clearInterval(pollTimer);
 
@@ -869,7 +891,7 @@
             }
           } catch {}
 
-          if (attempts >= 24) {
+          if (attempts >= 28) {
             clearInterval(pollTimer);
             digBtn.classList.remove("spinning");
             const msg = await fetchLatestFeed();
@@ -1044,8 +1066,8 @@
 
         if (activeFilter === "DUPLICATES" && !isDupe) return false;
         if (activeFilter === "EDITS" && !t.is_edit) return false;
-        if (["Dubstep", "Trap", "Afro House"].includes(activeFilter) && t.genre !== activeFilter) return false;
-        if (["Hypeddit", "Droploud"].includes(activeFilter) && t.platform !== activeFilter) return false;
+        if (GENRE_FILTERS.has(activeFilter) && t.genre !== activeFilter) return false;
+        if (PLATFORM_FILTERS.has(activeFilter) && t.platform !== activeFilter) return false;
 
         if (query) {
           const hay = `${t.title} ${t.genre} ${t.platform} ${isDupe ? "duplicate" : ""}`.toLowerCase();
@@ -1061,7 +1083,7 @@
         feed.innerHTML = `
           <div class="empty">
             <strong>No tracks in this view</strong>
-            Try switching filters or click <b>↻ Dig More</b> at the top right to pull fresh drops.
+            Try switching filters or click <b>↻ Dig More</b> → <b>⚡ Pull Fresh Drops Now</b> to scrape fresh tracks.
           </div>`;
         return;
       }
@@ -1080,7 +1102,11 @@
           (isDupe ? " is-duplicate" : "") +
           (isDone ? " is-hidden" : "");
 
-        const platClass = track.platform === "Droploud" ? "badge-droploud" : "badge-hypeddit";
+        const platClass = getPlatformBadgeClass(track.platform);
+        const openLabel = (track.platform === "Hypeddit" || track.platform === "Droploud")
+          ? "Open Gate &nearr;"
+          : "Open Track &nearr;";
+
         card.innerHTML = `
           <div class="meta">
             <span class="badge ${platClass}">${track.platform}</span>
@@ -1094,7 +1120,7 @@
           <div class="actions">
             <button class="btn btn-listen ${isPlaying ? "playing" : ""}">${isPlaying ? "■ Stop" : "▶ Listen"}</button>
             <button class="btn btn-copy">Copy Name</button>
-            <a class="btn btn-open" target="_blank" rel="noopener noreferrer">Open Gate &nearr;</a>
+            <a class="btn btn-open" target="_blank" rel="noopener noreferrer">${openLabel}</a>
             <button class="btn btn-done">${isDone ? "Restore" : "✓ Done"}</button>
           </div>
         `;
